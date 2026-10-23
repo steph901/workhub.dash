@@ -1,0 +1,1546 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Steph Fuentes Work Hub</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@300..700&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+<style>
+  /* Layout: one scrolling column of glass sections over a fixed carbon field lit by emerald, indigo and cyan glows. Dark only, by design. */
+  :root {
+    --bg: #05070d;
+    --surface: #0a0f1c;
+    --fg: #cbd5e1;
+    --emerald: #34d399;
+    --indigo: #818cf8;
+    --cyan: #22d3ee;
+    --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+    --font-body: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    color-scheme: dark;
+  }
+  html, body { min-height: 100%; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--font-body); }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 40; background: var(--bg); }
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .boot { min-height: 60vh; display: grid; place-items: center; font-family: var(--font-mono); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: #64748b; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.8.1/prop-types.min.js"></script>
+<script>window.react = window.React;</script>
+<script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+<script src="https://unpkg.com/lucide-react@0.263.1/dist/umd/lucide-react.min.js"></script>
+<script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js"></script>
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          display: ['"Bricolage Grotesque"', "ui-sans-serif", "system-ui", "sans-serif"],
+          sans: ["Geist", "ui-sans-serif", "system-ui", "-apple-system", '"Segoe UI"', "sans-serif"],
+          mono: ['"JetBrains Mono"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        },
+      },
+    },
+  };
+</script>
+<div id="root"><div class="boot">Loading</div></div>
+<script>
+(function () {
+const { useState, useMemo, useEffect, useRef, useCallback } = React;
+const { motion, AnimatePresence, MotionConfig, animate } = window.Motion;
+const {
+  Activity,
+  AlertTriangle,
+  ArrowUpRight,
+  Ban,
+  Briefcase,
+  CalendarDays,
+  Check,
+  CheckCircle2,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Clapperboard,
+  Clock,
+  Crown,
+  ExternalLink,
+  Layers,
+  ListChecks,
+  Megaphone,
+  MessageSquare,
+  Palette,
+  Play,
+  Plus,
+  Send,
+  ShieldCheck,
+  Sparkles,
+  Timer,
+  Trash2,
+  TrendingUp,
+  Users,
+  X,
+  Zap,
+  Camera,
+  Hourglass,
+  FileSpreadsheet,
+  Lock,
+  Radio,
+  Paperclip,
+  Pencil,
+  ImagePlus,
+  Wallet,
+  UserPlus,
+  FileText,
+  Star,
+  Smile
+} = window.LucideReact;
+const { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } = window.Recharts;
+const TONES = {
+  emerald: {
+    text: "text-emerald-300",
+    bg: "bg-emerald-400/10",
+    border: "border-emerald-400/30",
+    dot: "bg-emerald-400",
+    glow: "hover:border-emerald-400/40 hover:shadow-[0_0_44px_-14px_rgba(52,211,153,0.7)]",
+    hex: "#34d399"
+  },
+  cyan: {
+    text: "text-cyan-300",
+    bg: "bg-cyan-400/10",
+    border: "border-cyan-400/30",
+    dot: "bg-cyan-400",
+    glow: "hover:border-cyan-400/40 hover:shadow-[0_0_44px_-14px_rgba(34,211,238,0.7)]",
+    hex: "#22d3ee"
+  },
+  indigo: {
+    text: "text-indigo-300",
+    bg: "bg-indigo-400/10",
+    border: "border-indigo-400/30",
+    dot: "bg-indigo-400",
+    glow: "hover:border-indigo-400/40 hover:shadow-[0_0_44px_-14px_rgba(129,140,248,0.7)]",
+    hex: "#818cf8"
+  },
+  amber: {
+    text: "text-amber-300",
+    bg: "bg-amber-400/10",
+    border: "border-amber-400/30",
+    dot: "bg-amber-400",
+    glow: "hover:border-amber-400/40 hover:shadow-[0_0_44px_-14px_rgba(251,191,36,0.6)]",
+    hex: "#fbbf24"
+  },
+  fuchsia: {
+    text: "text-fuchsia-300",
+    bg: "bg-fuchsia-400/10",
+    border: "border-fuchsia-400/30",
+    dot: "bg-fuchsia-400",
+    glow: "hover:border-fuchsia-400/40 hover:shadow-[0_0_44px_-14px_rgba(232,121,249,0.6)]",
+    hex: "#e879f9"
+  },
+  rose: {
+    text: "text-rose-300",
+    bg: "bg-rose-400/10",
+    border: "border-rose-400/30",
+    dot: "bg-rose-400",
+    glow: "hover:border-rose-400/40 hover:shadow-[0_0_44px_-14px_rgba(251,113,133,0.6)]",
+    hex: "#fb7185"
+  },
+  slate: {
+    text: "text-slate-300",
+    bg: "bg-white/5",
+    border: "border-white/15",
+    dot: "bg-slate-400",
+    glow: "hover:border-white/25",
+    hex: "#94a3b8"
+  }
+};
+const CATEGORIES = [
+  { id: "legistai-ads", label: "LegistAI Ads", icon: Megaphone, tone: "emerald", art: ["#34d399", "#22d3ee"] },
+  { id: "dimenfy-internal", label: "Dimenfy Internal", icon: Briefcase, tone: "indigo", art: ["#818cf8", "#e879f9"] },
+  { id: "hr-payroll", label: "HR & Payroll", icon: Users, tone: "amber", art: ["#fbbf24", "#34d399"] },
+  { id: "video-motion", label: "Video/Motion", icon: Clapperboard, tone: "cyan", art: ["#22d3ee", "#818cf8"] },
+  { id: "exec-requests", label: "Direct Exec Requests", icon: Crown, tone: "fuchsia", art: ["#e879f9", "#818cf8"] }
+];
+const CAT_BY_ID = Object.fromEntries(CATEGORIES.map((c) => [c.id, c]));
+const catOf = (id) => CAT_BY_ID[id] || CAT_BY_ID["dimenfy-internal"];
+const STATUSES = {
+  Completed: { tone: "emerald", icon: CheckCircle2 },
+  "In Progress": { tone: "cyan", icon: Clock },
+  Blocked: { tone: "rose", icon: Ban }
+};
+const STATUS_ORDER = ["Completed", "In Progress", "Blocked"];
+const statusOf = (s) => STATUSES[s] || STATUSES["In Progress"];
+const PRIORITIES = { High: "rose", Medium: "amber", Low: "slate" };
+const MEETING_TYPES = ["Internal Align-up", "Leadership Directive", "Operational Decision"];
+const MEETING_TONES = { "Internal Align-up": "indigo", "Leadership Directive": "fuchsia", "Operational Decision": "amber" };
+const MAX_PHOTOS = 4;
+const MAX_PROFILE_PHOTOS = 3;
+const GUTTER = {
+  paddingLeft: "max(16px, env(safe-area-inset-left, 0px))",
+  paddingRight: "max(16px, env(safe-area-inset-right, 0px))"
+};
+const ease = [0.22, 1, 0.36, 1];
+const fadeUp = { hidden: { opacity: 0, y: 18 }, show: { opacity: 1, y: 0, transition: { duration: 0.6, ease } } };
+const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } } };
+const inputCls = "w-full rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/20";
+const pad = (n) => String(n).padStart(2, "0");
+const isoDay = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const num = (v) => {
+  const n = parseFloat(String(v == null ? "" : v).replace(/[$,\s]/g, ""));
+  return Number.isFinite(n) ? n : 0;
+};
+const fmtTime = (iso) => new Date(iso).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+const fmtWhen = (iso) => {
+  const d = new Date(iso);
+  const today = isoDay(/* @__PURE__ */ new Date()) === isoDay(d);
+  const day = today ? "Today" : d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  return `${day} \xB7 ${fmtTime(iso)}`;
+};
+const daysSince = (iso) => Math.max(0, Math.floor((Date.now() - new Date(iso).getTime()) / 864e5));
+const fmtAgo = (iso) => {
+  const mins = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 6e4));
+  if (mins < 1) return "just now";
+  if (mins < 60) return `${mins}m ago`;
+  if (mins < 60 * 24) return `${Math.round(mins / 60)}h ago`;
+  const days = Math.round(mins / (60 * 24));
+  return days < 30 ? `${days}d ago` : new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+};
+const normalizeUrl = (u) => {
+  const s = (u || "").trim();
+  if (!s) return "";
+  return /^https?:\/\//i.test(s) ? s : `https://${s}`;
+};
+const safeHref = (u) => /^https?:\/\//i.test(u || "") ? u : "";
+const lines = (s) => (s || "").split("\n").map((l) => l.trim()).filter(Boolean);
+const greeting = (d) => d.getHours() < 12 ? "Good morning" : d.getHours() < 18 ? "Good afternoon" : "Good evening";
+const blobUrl = (id) => `/_blob/${id}`;
+const filesOf = (task) => Array.isArray(task.files) ? task.files : [];
+const isImage = (f) => /^image\//.test(f.contentType || "");
+const isVideo = (f) => /^video\//.test(f.contentType || "");
+const ratioFrom = (format, category) => {
+  const px = /(\d{3,4})\s*[x×]\s*(\d{3,4})/i.exec(format || "");
+  if (px) return `${px[1]} / ${px[2]}`;
+  const r = /(\d{1,2})\s*:\s*(\d{1,2})/.exec(format || "");
+  if (r) return `${r[1]} / ${r[2]}`;
+  return category === "legistai-ads" ? "1 / 1" : "16 / 9";
+};
+const assetType = (category) => category === "video-motion" ? "Video" : category === "legistai-ads" ? "Ad Graphic" : "Brand Asset";
+function useHub() {
+  const [hub, setHub] = useState({
+    status: "connecting",
+    me: null,
+    isOwner: false,
+    canWrite: null,
+    tasks: [],
+    feedback: [],
+    meetings: [],
+    profiles: [],
+    settings: {},
+    privateLinks: {},
+    ready: {}
+  });
+  const caps = useRef({ db: null, user: null, assets: null });
+  useEffect(() => {
+    let alive = true;
+    const unsubs = [];
+    (async () => {
+      const c = typeof window !== "undefined" ? window.claude : null;
+      if (!c || typeof c.use !== "function") {
+        setHub((h) => ({ ...h, status: "offline" }));
+        return;
+      }
+      const [db, user, assets] = await Promise.all([c.use("db"), c.use("user"), c.use("assets")]);
+      if (!alive) return;
+      caps.current = { db, user, assets };
+      const [me, isOwner, canWrite] = user ? await Promise.all([user.me(), user.isOwner(), user.can("data.write")]) : [null, false, null];
+      if (!alive) return;
+      if (!db) {
+        setHub((h) => ({ ...h, status: "offline", me, isOwner }));
+        return;
+      }
+      setHub((h) => ({ ...h, status: "live", me, isOwner, canWrite }));
+      const onError = (e) => setHub((h) => ({ ...h, status: e && e.code === "revoked" ? "offline" : h.status }));
+      const listen = (query, key) => query.onSnapshot(
+        (snap) => setHub((h) => ({ ...h, [key]: snap.docs.map((d) => ({ id: d.id, ...d.data() })), ready: { ...h.ready, [key]: true } })),
+        onError
+      );
+      unsubs.push(listen(db.collection("tasks").orderBy("at", "desc").limit(500), "tasks"));
+      unsubs.push(listen(db.collection("feedback").orderBy("at", "asc").limit(1e3), "feedback"));
+      unsubs.push(listen(db.collection("meetings").orderBy("at", "desc").limit(200), "meetings"));
+      unsubs.push(listen(db.collection("profiles").orderBy("updatedAt", "desc").limit(200), "profiles"));
+      unsubs.push(db.doc("settings/hub").onSnapshot((s) => setHub((h) => ({ ...h, settings: s.exists ? s.data() : {} })), onError));
+      if (isOwner) {
+        unsubs.push(db.doc("private/links").onSnapshot((s) => setHub((h) => ({ ...h, privateLinks: s.exists ? s.data() : {} })), onError));
+      }
+    })();
+    return () => {
+      alive = false;
+      unsubs.forEach((u) => u());
+    };
+  }, []);
+  return [hub, setHub, caps];
+}
+function useProfiles(user, ids) {
+  const key = Array.from(new Set(ids.filter(Boolean))).sort().join("|");
+  const [map, setMap] = useState({});
+  useEffect(() => {
+    if (!user || !key) return void 0;
+    let alive = true;
+    user.profiles(key.split("|")).then((ps) => {
+      if (alive) setMap(ps);
+    });
+    return () => {
+      alive = false;
+    };
+  }, [user, key]);
+  return map;
+}
+function Glass({ className = "", children, ...rest }) {
+  return /* @__PURE__ */ React.createElement(motion.div, { className: `rounded-2xl border border-white/10 bg-white/[0.035] backdrop-blur-md ${className}`, ...rest }, children);
+}
+function Chip({ tone = "slate", icon: Icon, children, className = "" }) {
+  const t = TONES[tone];
+  return /* @__PURE__ */ React.createElement("span", { className: `inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border px-2.5 py-1 text-[11px] font-medium ${t.text} ${t.bg} ${t.border} ${className}` }, Icon && /* @__PURE__ */ React.createElement(Icon, { className: "h-3.5 w-3.5", "aria-hidden": "true" }), children);
+}
+function AnimatedNumber({ value, format = (v) => Math.round(v).toLocaleString("en-US"), countUp = true }) {
+  const [display, setDisplay] = useState(countUp ? 0 : value);
+  const last = useRef(countUp ? 0 : value);
+  useEffect(() => {
+    if (typeof document !== "undefined" && document.hidden) {
+      last.current = value;
+      setDisplay(value);
+      return void 0;
+    }
+    const controls = animate(last.current, value, {
+      duration: 1.1,
+      ease,
+      onUpdate: (v) => {
+        last.current = v;
+        setDisplay(v);
+      }
+    });
+    return () => controls.stop();
+  }, [value]);
+  return /* @__PURE__ */ React.createElement("span", { className: "tabular-nums" }, format(display));
+}
+function SectionHeader({ id, eyebrow, title, description, action, badge }) {
+  return /* @__PURE__ */ React.createElement("div", { className: "flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between" }, /* @__PURE__ */ React.createElement("div", { className: "min-w-0" }, /* @__PURE__ */ React.createElement("div", { className: "flex flex-wrap items-center gap-3" }, /* @__PURE__ */ React.createElement("span", { className: "font-mono text-[11px] uppercase tracking-[0.22em] text-cyan-300/80" }, eyebrow), badge), /* @__PURE__ */ React.createElement("h2", { id, className: "mt-2 font-display text-2xl font-semibold tracking-tight text-white sm:text-3xl [text-wrap:balance]" }, title), description && /* @__PURE__ */ React.createElement("p", { className: "mt-2 max-w-2xl text-sm leading-relaxed text-slate-400" }, description)), action && /* @__PURE__ */ React.createElement("div", { className: "flex shrink-0 flex-wrap gap-2" }, action));
+}
+function GlowButton({ children, onClick, tone = "emerald", type = "button", className = "", ...rest }) {
+  const styles = {
+    emerald: "bg-emerald-400 text-slate-950 shadow-[0_0_30px_-6px_rgba(52,211,153,0.75)] hover:bg-emerald-300",
+    ghost: "border border-white/15 bg-white/5 text-slate-100 hover:border-white/30 hover:bg-white/10",
+    amber: "bg-amber-300 text-slate-950 shadow-[0_0_30px_-8px_rgba(251,191,36,0.7)] hover:bg-amber-200",
+    rose: "border border-rose-400/30 bg-rose-400/10 text-rose-200 hover:bg-rose-400/20"
+  };
+  return /* @__PURE__ */ React.createElement(
+    motion.button,
+    {
+      type,
+      onClick,
+      whileHover: { y: -1 },
+      whileTap: { scale: 0.96 },
+      className: `inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 disabled:cursor-not-allowed disabled:opacity-50 ${styles[tone]} ${className}`,
+      ...rest
+    },
+    children
+  );
+}
+function useEscape(active, onEscape) {
+  useEffect(() => {
+    if (!active) return void 0;
+    const onKey = (e) => {
+      if (e.key === "Escape") onEscape();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [active, onEscape]);
+}
+function Modal({ open, onClose, labelledBy, wide = false, children }) {
+  useEscape(open, onClose);
+  return /* @__PURE__ */ React.createElement(AnimatePresence, null, open && /* @__PURE__ */ React.createElement(
+    motion.div,
+    {
+      className: "fixed inset-0 z-50 flex items-end justify-center sm:items-center",
+      initial: { opacity: 0 },
+      animate: { opacity: 1 },
+      exit: { opacity: 0 },
+      style: {
+        paddingTop: "max(16px, env(safe-area-inset-top, 0px))",
+        paddingBottom: "max(16px, env(safe-area-inset-bottom, 0px))",
+        ...GUTTER
+      }
+    },
+    /* @__PURE__ */ React.createElement("div", { className: "absolute inset-0 bg-black/70 backdrop-blur-sm", onClick: onClose }),
+    /* @__PURE__ */ React.createElement(
+      motion.div,
+      {
+        role: "dialog",
+        "aria-modal": "true",
+        "aria-labelledby": labelledBy,
+        initial: { opacity: 0, y: 40, scale: 0.96 },
+        animate: { opacity: 1, y: 0, scale: 1 },
+        exit: { opacity: 0, y: 30, scale: 0.97 },
+        transition: { type: "spring", damping: 26, stiffness: 300 },
+        className: `relative max-h-full w-full overflow-y-auto rounded-3xl border border-white/10 bg-[#0a0f1c]/95 shadow-2xl backdrop-blur-xl ${wide ? "max-w-5xl" : "max-w-xl"}`
+      },
+      children
+    )
+  ));
+}
+function Segmented({ id, options, value, onChange, toneOf }) {
+  return /* @__PURE__ */ React.createElement("div", { role: "radiogroup", "aria-labelledby": `${id}-label`, className: "flex gap-1 rounded-xl border border-white/10 bg-white/[0.03] p-1" }, options.map((o) => {
+    const active = o === value;
+    const t = TONES[toneOf(o)];
+    return /* @__PURE__ */ React.createElement(
+      "button",
+      {
+        type: "button",
+        role: "radio",
+        "aria-checked": active,
+        key: o,
+        onClick: () => onChange(o),
+        className: `relative flex-1 rounded-lg px-2 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60 ${active ? t.text : "text-slate-400 hover:text-slate-200"}`
+      },
+      active && /* @__PURE__ */ React.createElement(motion.span, { layoutId: `seg-${id}`, className: `absolute inset-0 rounded-lg border ${t.border} ${t.bg}`, transition: { type: "spring", bounce: 0.2, duration: 0.45 } }),
+      /* @__PURE__ */ React.createElement("span", { className: "relative" }, o)
+    );
+  }));
+}
+function FieldLabel({ htmlFor, id, children }) {
+  return htmlFor ? /* @__PURE__ */ React.createElement("label", { htmlFor, className: "mb-1.5 block text-xs font-medium text-slate-300" }, children) : /* @__PURE__ */ React.createElement("span", { id, className: "mb-1.5 block text-xs font-medium text-slate-300" }, children);
+}
+function Backdrop() {
+  return /* @__PURE__ */ React.createElement("div", { "aria-hidden": "true", className: "pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[#05070d]" }, /* @__PURE__ */ React.createElement(
+    motion.div,
+    {
+      className: "absolute -left-40 -top-48 h-[560px] w-[560px] rounded-full bg-emerald-500/20 blur-[130px]",
+      animate: { x: [0, 60, 0], y: [0, 40, 0] },
+      transition: { duration: 22, repeat: Infinity, ease: "easeInOut" }
+    }
+  ), /* @__PURE__ */ React.createElement(
+    motion.div,
+    {
+      className: "absolute -right-40 top-20 h-[520px] w-[520px] rounded-full bg-indigo-500/20 blur-[130px]",
+      animate: { x: [0, -50, 0], y: [0, 60, 0] },
+      transition: { duration: 26, repeat: Infinity, ease: "easeInOut" }
+    }
+  ), /* @__PURE__ */ React.createElement(
+    motion.div,
+    {
+      className: "absolute left-1/4 top-[-120px] h-[360px] w-[420px] rounded-full bg-rose-500/10 blur-[120px]",
+      animate: { x: [0, 30, 0], y: [0, 20, 0] },
+      transition: { duration: 18, repeat: Infinity, ease: "easeInOut" }
+    }
+  ), /* @__PURE__ */ React.createElement(
+    motion.div,
+    {
+      className: "absolute bottom-[-220px] left-1/3 h-[520px] w-[620px] rounded-full bg-cyan-500/10 blur-[140px]",
+      animate: { x: [0, 40, 0] },
+      transition: { duration: 30, repeat: Infinity, ease: "easeInOut" }
+    }
+  ), /* @__PURE__ */ React.createElement("div", { className: "absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(255,255,255,.7)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.7)_1px,transparent_1px)] [background-size:56px_56px] [mask-image:radial-gradient(ellipse_at_top,black_25%,transparent_70%)]" }));
+}
+function TopBar({ hub, onDump, waiting }) {
+  const me = hub.me;
+  const nav = [
+    ["overview", "Overview"],
+    ["worklog", "Worklog"],
+    ["approvals", "Approvals"],
+    ["team", "Team"],
+    ["gallery", "Gallery"],
+    ["meetings", "Meetings"]
+  ];
+  return /* @__PURE__ */ React.createElement("div", { className: "sticky z-30 border-b border-white/10 bg-[#05070d]/75 backdrop-blur-xl", style: { top: "env(safe-area-inset-top, 0px)" } }, /* @__PURE__ */ React.createElement("div", { className: "mx-auto flex max-w-7xl items-center gap-3 py-3", style: GUTTER }, /* @__PURE__ */ React.createElement("a", { href: "#overview", className: "flex shrink-0 items-center gap-2.5 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60" }, /* @__PURE__ */ React.createElement("span", { className: "grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-rose-400 via-fuchsia-400 to-cyan-400 font-display text-sm font-bold text-slate-950" }, "SF"), /* @__PURE__ */ React.createElement("span", { className: "hidden font-display text-sm font-semibold tracking-tight text-white md:block" }, "Steph's Work Hub")), /* @__PURE__ */ React.createElement("nav", { "aria-label": "Sections", className: "no-scrollbar flex min-w-0 flex-1 items-center gap-1 overflow-x-auto" }, nav.map(([id, label]) => /* @__PURE__ */ React.createElement("a", { key: id, href: `#${id}`, className: "relative inline-flex shrink-0 items-center rounded-full px-3 py-1.5 text-xs font-medium text-slate-400 transition-colors hover:bg-white/5 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60" }, label, id === "approvals" && waiting > 0 && /* @__PURE__ */ React.createElement("span", { className: "ml-1.5 rounded-full bg-amber-300 px-1.5 py-0.5 font-mono text-[10px] font-bold text-slate-950" }, waiting)))), hub.isOwner ? /* @__PURE__ */ React.createElement(GlowButton, { onClick: onDump, className: "shrink-0 !px-3 sm:!px-4", "aria-label": "Dump a new task" }, /* @__PURE__ */ React.createElement(Plus, { className: "h-4 w-4", "aria-hidden": "true" }), /* @__PURE__ */ React.createElement("span", { className: "hidden sm:inline" }, "Dump task")) : me && me.id ? /* @__PURE__ */ React.createElement("span", { className: "flex shrink-0 items-center gap-2 rounded-full border border-white/10 bg-white/5 py-1 pl-1 pr-3 text-xs text-slate-300" }, /* @__PURE__ */ React.createElement("img", { src: me.avatarUrl, alt: "", className: "h-6 w-6 rounded-full" }), /* @__PURE__ */ React.createElement("span", { className: "hidden sm:inline" }, hub.canWrite === false ? "View only" : "Can leave feedback")) : null));
+}
+function ConnectionNotice({ status }) {
+  if (status === "live") return null;
+  const offline = status === "offline";
+  return /* @__PURE__ */ React.createElement("div", { className: `flex items-center gap-3 rounded-2xl border px-4 py-3 text-sm ${offline ? "border-amber-400/30 bg-amber-400/5 text-amber-100" : "border-white/10 bg-white/[0.03] text-slate-300"}`, role: "status" }, /* @__PURE__ */ React.createElement(Radio, { className: `h-4 w-4 shrink-0 ${offline ? "text-amber-300" : "animate-pulse text-cyan-300 motion-reduce:animate-none"}`, "aria-hidden": "true" }), offline ? "The live log isn't available in this view. Open the hub on claude.ai while signed in to see entries and leave feedback." : "Connecting to the live log\u2026");
+}
+function useClock() {
+  const [now, setNow] = useState(() => /* @__PURE__ */ new Date());
+  useEffect(() => {
+    const t = setInterval(() => setNow(/* @__PURE__ */ new Date()), 3e4);
+    return () => clearInterval(t);
+  }, []);
+  return now;
+}
+function LivePill({ live }) {
+  return /* @__PURE__ */ React.createElement("span", { className: "inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-300 shadow-[0_0_22px_-4px_rgba(52,211,153,0.65)]" }, /* @__PURE__ */ React.createElement("span", { className: "relative flex h-2 w-2" }, live && /* @__PURE__ */ React.createElement("span", { className: "absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75 motion-reduce:animate-none" }), /* @__PURE__ */ React.createElement("span", { className: "relative inline-flex h-2 w-2 rounded-full bg-emerald-400" })), "Live workflow");
+}
+function Portrait({ photo, canChange, onPick }) {
+  const inner = photo ? /* @__PURE__ */ React.createElement("img", { src: photo, alt: "Steph Fuentes", className: "h-full w-full object-cover" }) : /* @__PURE__ */ React.createElement("span", { className: "bg-gradient-to-br from-rose-300 via-fuchsia-300 to-cyan-300 bg-clip-text font-display text-4xl font-bold text-transparent" }, "SF");
+  return /* @__PURE__ */ React.createElement("div", { className: "relative h-28 w-28 shrink-0 overflow-hidden rounded-[30px] p-[2px] sm:h-32 sm:w-32" }, /* @__PURE__ */ React.createElement(
+    motion.div,
+    {
+      "aria-hidden": "true",
+      className: "absolute -inset-1/2 bg-[conic-gradient(from_0deg,#fb7185,#e879f9,#22d3ee,#34d399,#fb7185)]",
+      animate: { rotate: 360 },
+      transition: { duration: 10, repeat: Infinity, ease: "linear" }
+    }
+  ), canChange ? /* @__PURE__ */ React.createElement(
+    "button",
+    {
+      type: "button",
+      onClick: onPick,
+      className: "group relative grid h-full w-full place-items-center overflow-hidden rounded-[28px] bg-[#0a0f1c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300",
+      "aria-label": photo ? "Change portrait photo" : "Add a portrait photo"
+    },
+    inner,
+    /* @__PURE__ */ React.createElement("span", { className: "absolute inset-x-0 bottom-0 flex items-center justify-center gap-1 bg-black/60 py-1.5 text-[10px] font-medium text-slate-200 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100" }, /* @__PURE__ */ React.createElement(Camera, { className: "h-3 w-3", "aria-hidden": "true" }), " ", photo ? "Change" : "Add photo")
+  ) : /* @__PURE__ */ React.createElement("div", { className: "relative grid h-full w-full place-items-center overflow-hidden rounded-[28px] bg-[#0a0f1c]" }, inner));
+}
+const TILTS = [-4, 3, -2, 4];
+function PhotoStrip({ photos, isOwner, uploading, onAdd, onOpen }) {
+  if (!isOwner && !photos.length) return null;
+  const slots = isOwner ? Math.max(0, Math.min(MAX_PHOTOS - photos.length, 3)) : 0;
+  return /* @__PURE__ */ React.createElement("div", { className: "mt-6" }, /* @__PURE__ */ React.createElement("p", { className: "font-mono text-[10px] uppercase tracking-[0.2em] text-rose-200/70" }, "Behind the work"), /* @__PURE__ */ React.createElement("ul", { className: "mt-3 flex flex-wrap gap-3" }, photos.map((p, i) => /* @__PURE__ */ React.createElement("li", { key: p.id }, /* @__PURE__ */ React.createElement(
+    motion.button,
+    {
+      type: "button",
+      onClick: () => onOpen(i),
+      initial: { rotate: TILTS[i % 4] },
+      whileHover: { rotate: 0, y: -6, scale: 1.06 },
+      whileTap: { scale: 0.97 },
+      className: "block overflow-hidden rounded-xl border-4 border-white/90 bg-white/90 shadow-[0_14px_30px_-12px_rgba(0,0,0,0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300",
+      "aria-label": p.caption ? `Open photo: ${p.caption}` : `Open photo ${i + 1}`
+    },
+    /* @__PURE__ */ React.createElement("img", { src: blobUrl(p.id), alt: p.caption || "", className: "h-16 w-16 object-cover sm:h-20 sm:w-20" })
+  ))), Array.from({ length: slots }, (_, i) => /* @__PURE__ */ React.createElement("li", { key: `slot-${i}` }, /* @__PURE__ */ React.createElement(
+    motion.button,
+    {
+      type: "button",
+      onClick: onAdd,
+      disabled: uploading,
+      initial: { rotate: TILTS[(photos.length + i) % 4] },
+      whileHover: { rotate: 0, y: -4 },
+      className: "grid h-[72px] w-[72px] place-items-center rounded-xl border-2 border-dashed border-rose-300/30 bg-rose-300/[0.04] text-rose-200/70 transition-colors hover:border-rose-300/60 hover:text-rose-100 disabled:opacity-50 sm:h-[88px] sm:w-[88px]",
+      "aria-label": "Add a personal photo"
+    },
+    /* @__PURE__ */ React.createElement("span", { className: "flex flex-col items-center gap-1 text-[10px]" }, /* @__PURE__ */ React.createElement(ImagePlus, { className: "h-5 w-5", "aria-hidden": "true" }), uploading ? "Uploading" : "Add photo")
+  )))));
+}
+function PhotoViewer({ photos, index, isOwner, portraitId, onClose, onStep, onCaption, onSetPortrait, onRemove }) {
+  const photo = index === null ? null : photos[index] || null;
+  const [caption, setCaption] = useState("");
+  const [armed, setArmed] = useState(false);
+  useEffect(() => {
+    setCaption(photo ? photo.caption || "" : "");
+    setArmed(false);
+  }, [photo && photo.id]);
+  return /* @__PURE__ */ React.createElement(Modal, { open: !!photo, onClose, labelledBy: "photo-title" }, photo && /* @__PURE__ */ React.createElement("div", { className: "flex flex-col" }, /* @__PURE__ */ React.createElement("div", { className: "relative bg-black" }, /* @__PURE__ */ React.createElement(AnimatePresence, { mode: "wait" }, /* @__PURE__ */ React.createElement(
+    motion.img,
+    {
+      key: photo.id,
+      src: blobUrl(photo.id),
+      alt: photo.caption || "Photo of Steph",
+      initial: { opacity: 0, scale: 1.02 },
+      animate: { opacity: 1, scale: 1 },
+      exit: { opacity: 0 },
+      className: "max-h-[60vh] w-full object-contain"
+    }
+  )), photos.length > 1 && /* @__PURE__ */ React.createElement("div", { className: "absolute inset-x-3 top-1/2 flex -translate-y-1/2 justify-between" }, /* @__PURE__ */ React.createElement("button", { type: "button", onClick: () => onStep(-1), "aria-label": "Previous photo", className: "grid h-9 w-9 place-items-center rounded-full bg-black/50 text-white backdrop-blur hover:bg-black/70" }, /* @__PURE__ */ React.createElement(ChevronLeft, { className: "h-5 w-5" })), /* @__PURE__ */ React.createElement("button", { type: "button", onClick: () => onStep(1), "aria-label": "Next photo", className: "grid h-9 w-9 place-items-center rounded-full bg-black/50 text-white backdrop-blur hover:bg-black/70" }, /* @__PURE__ */ React.createElement(ChevronRight, { className: "h-5 w-5" }))), /* @__PURE__ */ React.createElement("button", { type: "button", onClick: onClose, "aria-label": "Close photo", className: "absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-black/50 text-white backdrop-blur hover:bg-black/70" }, /* @__PURE__ */ React.createElement(X, { className: "h-5 w-5" }))), /* @__PURE__ */ React.createElement("div", { className: "flex flex-col gap-3 p-5" }, /* @__PURE__ */ React.createElement("h2", { id: "photo-title", className: "sr-only" }, "Photo ", index + 1, " of ", photos.length), isOwner ? /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("label", { htmlFor: "photo-caption", className: "text-xs font-medium text-slate-300" }, "Caption"), /* @__PURE__ */ React.createElement(
+    "input",
+    {
+      id: "photo-caption",
+      value: caption,
+      onChange: (e) => setCaption(e.target.value),
+      onBlur: () => {
+        if (caption.trim() !== (photo.caption || "")) onCaption(photo.id, caption.trim());
+      },
+      onKeyDown: (e) => {
+        if (e.key === "Enter") e.currentTarget.blur();
+      },
+      placeholder: "Where or when was this?",
+      className: inputCls
+    }
+  ), /* @__PURE__ */ React.createElement("div", { className: "flex flex-wrap items-center gap-2" }, portraitId === photo.id ? /* @__PURE__ */ React.createElement(Chip, { tone: "rose", icon: Star }, "Main portrait") : /* @__PURE__ */ React.createElement(GlowButton, { tone: "ghost", onClick: () => onSetPortrait(photo.id), className: "!py-2 text-xs" }, /* @__PURE__ */ React.createElement(Star, { className: "h-4 w-4 text-rose-300", "aria-hidden": "true" }), "Use as main portrait"), armed ? /* @__PURE__ */ React.createElement("span", { className: "flex items-center gap-2 text-xs text-slate-400" }, "Remove this photo?", /* @__PURE__ */ React.createElement("button", { type: "button", onClick: () => onRemove(photo.id), className: "rounded-lg bg-rose-500/20 px-2.5 py-1 font-semibold text-rose-200 hover:bg-rose-500/30" }, "Remove"), /* @__PURE__ */ React.createElement("button", { type: "button", onClick: () => setArmed(false), className: "rounded-lg px-2.5 py-1 hover:bg-white/5" }, "Keep")) : /* @__PURE__ */ React.createElement("button", { type: "button", onClick: () => setArmed(true), className: "inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-rose-300" }, /* @__PURE__ */ React.createElement(Trash2, { className: "h-3.5 w-3.5", "aria-hidden": "true" }), "Remove photo"))) : /* @__PURE__ */ React.createElement("p", { className: "text-sm text-slate-300" }, photo.caption || " "))));
+}
+function CurrentlyLine({ value, isOwner, onSave }) {
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState(value || "");
+  useEffect(() => {
+    if (!editing) setDraft(value || "");
+  }, [value, editing]);
+  if (!isOwner && !value) return null;
+  const save = () => {
+    setEditing(false);
+    if (draft.trim() !== (value || "")) onSave(draft.trim());
+  };
+  return /* @__PURE__ */ React.createElement("div", { className: "mt-4 flex min-w-0 items-center gap-2 text-sm" }, /* @__PURE__ */ React.createElement("span", { className: "shrink-0 font-mono text-[10px] uppercase tracking-[0.2em] text-rose-200/80" }, "Currently"), editing ? /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("label", { htmlFor: "currently-input", className: "sr-only" }, "What you're focused on"), /* @__PURE__ */ React.createElement(
+    "input",
+    {
+      id: "currently-input",
+      autoFocus: true,
+      value: draft,
+      maxLength: 120,
+      onChange: (e) => setDraft(e.target.value),
+      onBlur: save,
+      onKeyDown: (e) => {
+        if (e.key === "Enter") e.currentTarget.blur();
+        if (e.key === "Escape") {
+          setDraft(value || "");
+          setEditing(false);
+        }
+      },
+      placeholder: "Finishing the LegistAI launch reel",
+      className: `${inputCls} !py-1.5`
+    }
+  )) : /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("span", { className: `min-w-0 truncate ${value ? "text-slate-100" : "italic text-slate-500"}` }, value || "Add what you're focused on"), isOwner && /* @__PURE__ */ React.createElement("button", { type: "button", onClick: () => setEditing(true), "aria-label": "Edit what you're focused on", className: "shrink-0 rounded-md p-1 text-slate-500 hover:bg-white/5 hover:text-white" }, /* @__PURE__ */ React.createElement(Pencil, { className: "h-3.5 w-3.5" }))));
+}
+function MetricCard({ icon: Icon, label, value, format, sub, tone }) {
+  const t = TONES[tone];
+  return /* @__PURE__ */ React.createElement(
+    motion.div,
+    {
+      variants: fadeUp,
+      whileHover: { y: -4 },
+      className: `group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.035] p-4 backdrop-blur-md transition-[border-color,box-shadow] duration-300 sm:p-5 ${t.glow}`
+    },
+    /* @__PURE__ */ React.createElement("div", { className: `absolute -right-10 -top-10 h-28 w-28 rounded-full opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100 ${t.bg}` }),
+    /* @__PURE__ */ React.createElement("div", { className: "relative flex items-start justify-between gap-2" }, /* @__PURE__ */ React.createElement("span", { className: "font-mono text-[10px] uppercase leading-snug tracking-[0.16em] text-slate-400" }, label), /* @__PURE__ */ React.createElement("span", { className: `grid h-8 w-8 shrink-0 place-items-center rounded-lg border ${t.border} ${t.bg} ${t.text}` }, /* @__PURE__ */ React.createElement(Icon, { className: "h-4 w-4", "aria-hidden": "true" }))),
+    /* @__PURE__ */ React.createElement("div", { className: "relative mt-4 font-display text-3xl font-semibold tracking-tight text-white sm:text-4xl" }, /* @__PURE__ */ React.createElement(AnimatedNumber, { value, format })),
+    /* @__PURE__ */ React.createElement("p", { className: "relative mt-1.5 text-xs text-slate-400" }, sub)
+  );
+}
+function Hero({ hub, metrics, live, uploading, onUploadPhoto, onOpenPhoto, onSaveSettings }) {
+  const now = useClock();
+  const fileRef = useRef(null);
+  const settings = hub.settings || {};
+  const photos = Array.isArray(settings.photos) ? settings.photos : [];
+  const portraitId = settings.portraitAssetId || photos[0] && photos[0].id || "";
+  const dateStr = now.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+  const pick = () => fileRef.current && fileRef.current.click();
+  const onFile = (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) onUploadPhoto(file);
+    e.target.value = "";
+  };
+  return /* @__PURE__ */ React.createElement(motion.section, { id: "overview", "aria-label": "Overview", variants: stagger, initial: "hidden", animate: "show", className: "grid scroll-mt-24 gap-5 lg:grid-cols-[1.2fr_1fr]" }, /* @__PURE__ */ React.createElement(motion.div, { variants: fadeUp, className: "min-w-0" }, /* @__PURE__ */ React.createElement(Glass, { className: "relative h-full overflow-hidden p-6 sm:p-8" }, /* @__PURE__ */ React.createElement("div", { "aria-hidden": "true", className: "absolute -right-28 -top-28 h-72 w-72 rounded-full bg-rose-400/10 blur-3xl" }), /* @__PURE__ */ React.createElement("div", { "aria-hidden": "true", className: "absolute -bottom-32 left-10 h-64 w-64 rounded-full bg-indigo-500/10 blur-3xl" }), /* @__PURE__ */ React.createElement("p", { className: "relative font-mono text-[11px] uppercase tracking-[0.22em] text-rose-200/80" }, greeting(now), " from Steph"), /* @__PURE__ */ React.createElement("div", { className: "relative mt-4 flex flex-col gap-6 sm:flex-row sm:items-center" }, /* @__PURE__ */ React.createElement(Portrait, { photo: portraitId ? blobUrl(portraitId) : "", canChange: hub.isOwner, onPick: pick }), /* @__PURE__ */ React.createElement("div", { className: "min-w-0" }, /* @__PURE__ */ React.createElement("div", { className: "flex flex-wrap items-center gap-3" }, /* @__PURE__ */ React.createElement("h1", { className: "font-display text-4xl font-bold tracking-tight text-white sm:text-5xl [text-wrap:balance]" }, "Steph Fuentes"), /* @__PURE__ */ React.createElement(LivePill, { live })), /* @__PURE__ */ React.createElement("p", { className: "mt-3 text-lg font-medium text-slate-100 sm:text-xl" }, "Executive Operations & Creative Director"), /* @__PURE__ */ React.createElement("p", { className: "mt-1 text-sm text-slate-400" }, "Dimenfy & LegistAI \xB7 ops, creative and the team behind them"), /* @__PURE__ */ React.createElement("div", { className: "mt-5 flex flex-wrap gap-2" }, /* @__PURE__ */ React.createElement(Chip, { tone: "indigo", icon: Briefcase }, "Operations"), /* @__PURE__ */ React.createElement(Chip, { tone: "cyan", icon: Clapperboard }, "Creative production"), /* @__PURE__ */ React.createElement(Chip, { tone: "amber", icon: Users }, "Payroll & team"), /* @__PURE__ */ React.createElement(Chip, { tone: "fuchsia", icon: Crown }, "Executive coordination")))), /* @__PURE__ */ React.createElement("div", { className: "relative" }, /* @__PURE__ */ React.createElement(CurrentlyLine, { value: settings.currently, isOwner: hub.isOwner, onSave: (v) => onSaveSettings({ currently: v }) }), /* @__PURE__ */ React.createElement(PhotoStrip, { photos, isOwner: hub.isOwner, uploading, onAdd: pick, onOpen: onOpenPhoto })), hub.isOwner && /* @__PURE__ */ React.createElement("input", { ref: fileRef, id: "photo-upload", type: "file", accept: "image/*", className: "hidden", onChange: onFile }), /* @__PURE__ */ React.createElement("div", { className: "relative mt-7 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-white/10 pt-4 font-mono text-[11px] text-slate-400" }, /* @__PURE__ */ React.createElement("span", { className: "inline-flex items-center gap-2" }, /* @__PURE__ */ React.createElement(CalendarDays, { className: "h-3.5 w-3.5", "aria-hidden": "true" }), dateStr), /* @__PURE__ */ React.createElement("span", { className: "inline-flex items-center gap-2" }, /* @__PURE__ */ React.createElement(Clock, { className: "h-3.5 w-3.5", "aria-hidden": "true" }), fmtTime(now.toISOString()), " local"), /* @__PURE__ */ React.createElement("span", { className: "inline-flex items-center gap-2 text-emerald-300/90" }, /* @__PURE__ */ React.createElement(Activity, { className: "h-3.5 w-3.5", "aria-hidden": "true" }), metrics.loggedToday, " entries logged today")))), /* @__PURE__ */ React.createElement(motion.div, { variants: stagger, className: "grid grid-cols-2 gap-4" }, /* @__PURE__ */ React.createElement(MetricCard, { icon: CheckCircle2, label: "Deliverables today", value: metrics.deliverablesToday, tone: "emerald", sub: `Completed, of ${metrics.loggedToday} logged today` }), /* @__PURE__ */ React.createElement(MetricCard, { icon: Hourglass, label: "Awaiting leadership", value: metrics.awaiting, tone: "amber", sub: metrics.awaiting ? "Entries waiting on a decision" : "Nothing waiting on a decision" }), /* @__PURE__ */ React.createElement(MetricCard, { icon: Timer, label: "Hours saved", value: metrics.hoursSaved, format: (v) => `${v.toFixed(1)}h`, tone: "indigo", sub: "From automations and templates, last 7 days" }), /* @__PURE__ */ React.createElement(MetricCard, { icon: Layers, label: "Active projects", value: metrics.active, tone: "fuchsia", sub: metrics.blocked ? `${metrics.blocked} blocked, needs input` : "Nothing blocked" })));
+}
+function ChartTooltip({ active, payload, label }) {
+  if (!active || !payload || !payload.length) return null;
+  return /* @__PURE__ */ React.createElement("div", { className: "rounded-xl border border-white/10 bg-[#0a0f1c]/95 px-3 py-2 text-xs shadow-xl backdrop-blur" }, /* @__PURE__ */ React.createElement("div", { className: "mb-1 font-mono text-[10px] uppercase tracking-[0.16em] text-slate-400" }, label), payload.map((p) => /* @__PURE__ */ React.createElement("div", { key: p.dataKey, className: "flex items-center gap-2 text-slate-200" }, /* @__PURE__ */ React.createElement("span", { className: "h-2 w-2 rounded-full", style: { background: p.stroke } }), p.name, ": ", /* @__PURE__ */ React.createElement("span", { className: "font-semibold tabular-nums" }, p.value))));
+}
+function Insights({ tasks }) {
+  const data = useMemo(
+    () => Array.from({ length: 7 }, (_, i) => {
+      const d = /* @__PURE__ */ new Date();
+      d.setDate(d.getDate() - (6 - i));
+      const key = isoDay(d);
+      const day = tasks.filter((t) => isoDay(new Date(t.at)) === key);
+      return {
+        day: i === 6 ? "Today" : d.toLocaleDateString("en-US", { weekday: "short" }),
+        logged: day.length,
+        completed: day.filter((t) => t.status === "Completed").length
+      };
+    }),
+    [tasks]
+  );
+  const mix = useMemo(() => {
+    const weekAgo = Date.now() - 7 * 864e5;
+    const recent = tasks.filter((t) => new Date(t.at).getTime() >= weekAgo);
+    const max = Math.max(1, ...CATEGORIES.map((c) => recent.filter((t) => t.category === c.id).length));
+    return CATEGORIES.map((c) => {
+      const count = recent.filter((t) => t.category === c.id).length;
+      return { ...c, count, pct: count / max * 100 };
+    });
+  }, [tasks]);
+  const weekTotal = data.reduce((s, d) => s + d.logged, 0);
+  const lastDot = (props) => {
+    const { cx, cy, index } = props;
+    if (index !== 6) return /* @__PURE__ */ React.createElement("circle", { key: `dot-${index}`, cx, cy, r: 0, fill: "none" });
+    return /* @__PURE__ */ React.createElement("g", { key: `dot-${index}` }, /* @__PURE__ */ React.createElement("circle", { cx, cy, r: 9, fill: "#34d399", fillOpacity: 0.18 }), /* @__PURE__ */ React.createElement("circle", { cx, cy, r: 4, fill: "#34d399", stroke: "#05070d", strokeWidth: 2 }));
+  };
+  return /* @__PURE__ */ React.createElement(motion.section, { "aria-label": "Weekly output", variants: stagger, initial: "hidden", animate: "show", className: "grid gap-5 lg:grid-cols-[1.6fr_1fr]" }, /* @__PURE__ */ React.createElement(Glass, { variants: fadeUp, className: "min-w-0 p-5 sm:p-6" }, /* @__PURE__ */ React.createElement("div", { className: "flex flex-wrap items-start justify-between gap-3" }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("span", { className: "font-mono text-[11px] uppercase tracking-[0.2em] text-slate-400" }, "Output \xB7 last 7 days"), /* @__PURE__ */ React.createElement("p", { className: "mt-1 font-display text-2xl font-semibold text-white" }, /* @__PURE__ */ React.createElement(AnimatedNumber, { value: weekTotal }), " entries logged")), /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-4 text-xs text-slate-400" }, /* @__PURE__ */ React.createElement("span", { className: "inline-flex items-center gap-2" }, /* @__PURE__ */ React.createElement("span", { className: "h-2 w-2 rounded-full bg-indigo-400" }), "Logged"), /* @__PURE__ */ React.createElement("span", { className: "inline-flex items-center gap-2" }, /* @__PURE__ */ React.createElement("span", { className: "h-2 w-2 rounded-full bg-emerald-400" }), "Completed"))), /* @__PURE__ */ React.createElement("div", { className: "mt-4 h-56" }, /* @__PURE__ */ React.createElement(ResponsiveContainer, { width: "100%", height: "100%" }, /* @__PURE__ */ React.createElement(AreaChart, { data, margin: { top: 12, right: 12, left: -20, bottom: 0 } }, /* @__PURE__ */ React.createElement("defs", null, /* @__PURE__ */ React.createElement("linearGradient", { id: "gLogged", x1: "0", y1: "0", x2: "0", y2: "1" }, /* @__PURE__ */ React.createElement("stop", { offset: "0%", stopColor: "#818cf8", stopOpacity: 0.35 }), /* @__PURE__ */ React.createElement("stop", { offset: "100%", stopColor: "#818cf8", stopOpacity: 0 })), /* @__PURE__ */ React.createElement("linearGradient", { id: "gDone", x1: "0", y1: "0", x2: "0", y2: "1" }, /* @__PURE__ */ React.createElement("stop", { offset: "0%", stopColor: "#34d399", stopOpacity: 0.4 }), /* @__PURE__ */ React.createElement("stop", { offset: "100%", stopColor: "#34d399", stopOpacity: 0 }))), /* @__PURE__ */ React.createElement(CartesianGrid, { stroke: "rgba(255,255,255,0.06)", vertical: false }), /* @__PURE__ */ React.createElement(XAxis, { dataKey: "day", tick: { fill: "#94a3b8", fontSize: 11 }, axisLine: false, tickLine: false }), /* @__PURE__ */ React.createElement(YAxis, { allowDecimals: false, tick: { fill: "#64748b", fontSize: 11 }, axisLine: false, tickLine: false, width: 44 }), /* @__PURE__ */ React.createElement(Tooltip, { content: /* @__PURE__ */ React.createElement(ChartTooltip, null), cursor: { stroke: "rgba(255,255,255,0.15)" } }), /* @__PURE__ */ React.createElement(Area, { type: "monotone", dataKey: "logged", name: "Logged", stroke: "#818cf8", strokeWidth: 2, fill: "url(#gLogged)", dot: false }), /* @__PURE__ */ React.createElement(Area, { type: "monotone", dataKey: "completed", name: "Completed", stroke: "#34d399", strokeWidth: 2.5, fill: "url(#gDone)", dot: lastDot, activeDot: { r: 5 } }))))), /* @__PURE__ */ React.createElement(Glass, { variants: fadeUp, className: "min-w-0 p-5 sm:p-6" }, /* @__PURE__ */ React.createElement("span", { className: "font-mono text-[11px] uppercase tracking-[0.2em] text-slate-400" }, "Workload mix \xB7 last 7 days"), /* @__PURE__ */ React.createElement("ul", { className: "mt-5 flex flex-col gap-4" }, mix.map((c, i) => {
+    const t = TONES[c.tone];
+    const Icon = c.icon;
+    return /* @__PURE__ */ React.createElement("li", { key: c.id }, /* @__PURE__ */ React.createElement("div", { className: "flex items-center justify-between gap-3 text-sm" }, /* @__PURE__ */ React.createElement("span", { className: "inline-flex items-center gap-2 text-slate-200" }, /* @__PURE__ */ React.createElement(Icon, { className: `h-4 w-4 ${t.text}`, "aria-hidden": "true" }), c.label), /* @__PURE__ */ React.createElement("span", { className: "font-mono text-xs tabular-nums text-slate-400" }, c.count)), /* @__PURE__ */ React.createElement("div", { className: "mt-2 h-1.5 overflow-hidden rounded-full bg-white/5" }, /* @__PURE__ */ React.createElement(
+      motion.div,
+      {
+        className: `h-full rounded-full ${t.dot}`,
+        style: { boxShadow: `0 0 12px ${t.hex}` },
+        initial: { width: 0 },
+        animate: { width: `${c.pct}%` },
+        transition: { duration: 0.9, delay: 0.2 + i * 0.08, ease }
+      }
+    )));
+  }))));
+}
+const FILTERS = [{ id: "all", label: "All" }, ...CATEGORIES.map((c) => ({ id: c.id, label: c.label }))];
+function ApprovalChip({ task }) {
+  if (task.approval === "approved") return /* @__PURE__ */ React.createElement(Chip, { tone: "emerald", icon: ShieldCheck }, "Approved");
+  if (task.approval === "changes") return /* @__PURE__ */ React.createElement(Chip, { tone: "rose", icon: AlertTriangle }, "Changes requested");
+  if (task.needsApproval) return /* @__PURE__ */ React.createElement(Chip, { tone: "amber", icon: Hourglass }, "Awaiting approval");
+  return null;
+}
+function FileLinks({ files, className = "" }) {
+  if (!files.length) return null;
+  return /* @__PURE__ */ React.createElement("ul", { className: `flex flex-wrap gap-2 ${className}` }, files.map((f) => /* @__PURE__ */ React.createElement("li", { key: f.id }, /* @__PURE__ */ React.createElement(
+    "a",
+    {
+      href: blobUrl(f.id),
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "inline-flex max-w-[220px] items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] text-slate-200 hover:border-white/25 hover:bg-white/10"
+    },
+    isImage(f) ? /* @__PURE__ */ React.createElement(ImagePlus, { className: "h-3.5 w-3.5 shrink-0 text-emerald-300", "aria-hidden": "true" }) : isVideo(f) ? /* @__PURE__ */ React.createElement(Play, { className: "h-3.5 w-3.5 shrink-0 text-cyan-300", "aria-hidden": "true" }) : /* @__PURE__ */ React.createElement(FileText, { className: "h-3.5 w-3.5 shrink-0 text-indigo-300", "aria-hidden": "true" }),
+    /* @__PURE__ */ React.createElement("span", { className: "truncate" }, f.name || "File")
+  ))));
+}
+function TaskRow({ task, canManage, onCycleStatus, onOpenThread }) {
+  const cat = catOf(task.category);
+  const st = statusOf(task.status);
+  const StIcon = st.icon;
+  const tone = TONES[st.tone];
+  const notes = task.comments.filter((c) => c.kind !== "decision").length;
+  const href = safeHref(task.url);
+  const files = filesOf(task);
+  const statusChip = /* @__PURE__ */ React.createElement(Chip, { tone: st.tone, icon: StIcon }, task.status);
+  return /* @__PURE__ */ React.createElement(
+    motion.li,
+    {
+      layout: true,
+      initial: { opacity: 0, y: 14 },
+      animate: { opacity: 1, y: 0 },
+      exit: { opacity: 0, x: -30, transition: { duration: 0.2 } },
+      transition: { duration: 0.4, ease },
+      className: "group relative flex flex-col gap-3 px-4 py-4 transition-colors hover:bg-white/[0.025] sm:flex-row sm:items-start sm:gap-4 sm:px-5"
+    },
+    /* @__PURE__ */ React.createElement(
+      motion.button,
+      {
+        type: "button",
+        whileTap: canManage ? { scale: 0.82, rotate: -8 } : void 0,
+        onClick: canManage ? () => onCycleStatus(task) : void 0,
+        disabled: !canManage,
+        title: canManage ? "Change status" : task.status,
+        "aria-label": canManage ? `Status ${task.status}. Change status` : `Status ${task.status}`,
+        className: `hidden h-10 w-10 shrink-0 place-items-center rounded-xl border transition-shadow sm:grid ${tone.border} ${tone.bg} ${tone.text} ${canManage ? tone.glow : "cursor-default"} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60`
+      },
+      /* @__PURE__ */ React.createElement(StIcon, { className: "h-[18px] w-[18px]", "aria-hidden": "true" })
+    ),
+    /* @__PURE__ */ React.createElement("div", { className: "min-w-0 flex-1" }, /* @__PURE__ */ React.createElement("h3", { className: "text-[15px] font-medium leading-snug text-slate-100" }, task.title), /* @__PURE__ */ React.createElement("div", { className: "mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] text-slate-500" }, /* @__PURE__ */ React.createElement("span", null, task.id), /* @__PURE__ */ React.createElement("span", null, fmtWhen(task.at)), num(task.hoursSaved) > 0 && /* @__PURE__ */ React.createElement("span", { className: "text-indigo-300/80" }, num(task.hoursSaved), "h saved"), files.length > 0 && /* @__PURE__ */ React.createElement("span", { className: "inline-flex items-center gap-1 text-slate-400" }, /* @__PURE__ */ React.createElement(Paperclip, { className: "h-3 w-3", "aria-hidden": "true" }), files.length, " ", files.length === 1 ? "file" : "files")), task.notes && /* @__PURE__ */ React.createElement("p", { className: "mt-2 line-clamp-2 text-sm leading-relaxed text-slate-400" }, task.notes), /* @__PURE__ */ React.createElement("div", { className: "mt-3 flex flex-wrap items-center gap-2" }, canManage ? /* @__PURE__ */ React.createElement("button", { type: "button", onClick: () => onCycleStatus(task), className: "rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60", title: "Change status" }, statusChip) : statusChip, /* @__PURE__ */ React.createElement(Chip, { tone: cat.tone, icon: cat.icon }, cat.label), /* @__PURE__ */ React.createElement(Chip, { tone: PRIORITIES[task.priority] || "slate" }, task.priority, " priority"), /* @__PURE__ */ React.createElement(ApprovalChip, { task }))),
+    /* @__PURE__ */ React.createElement("div", { className: "flex shrink-0 flex-wrap items-center gap-2 sm:flex-col sm:items-end" }, href ? /* @__PURE__ */ React.createElement(
+      "a",
+      {
+        href,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        className: "inline-flex items-center gap-1.5 rounded-lg border border-cyan-400/25 bg-cyan-400/5 px-3 py-1.5 text-xs font-medium text-cyan-200 transition hover:border-cyan-300/50 hover:bg-cyan-400/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60"
+      },
+      "Deliverable ",
+      /* @__PURE__ */ React.createElement(ArrowUpRight, { className: "h-3.5 w-3.5", "aria-hidden": "true" })
+    ) : !files.length ? /* @__PURE__ */ React.createElement("span", { className: "px-1 text-xs text-slate-600" }, "No link") : null, /* @__PURE__ */ React.createElement(
+      "button",
+      {
+        type: "button",
+        onClick: () => onOpenThread(task.id),
+        className: "inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-slate-200 transition hover:border-white/25 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60"
+      },
+      /* @__PURE__ */ React.createElement(MessageSquare, { className: "h-3.5 w-3.5", "aria-hidden": "true" }),
+      notes ? `${notes} ${notes === 1 ? "note" : "notes"}` : "Feedback"
+    ))
+  );
+}
+function WorkLog({ tasks, hub, onQuickAdd, onCompose, onCycleStatus, onOpenThread }) {
+  const [filter, setFilter] = useState("all");
+  const [quick, setQuick] = useState("");
+  const owner = hub.isOwner;
+  const counts = useMemo(() => {
+    const c = { all: tasks.length };
+    CATEGORIES.forEach((cat) => {
+      c[cat.id] = tasks.filter((t) => t.category === cat.id).length;
+    });
+    return c;
+  }, [tasks]);
+  const visible = useMemo(() => tasks.filter((t) => filter === "all" || t.category === filter), [tasks, filter]);
+  const submitQuick = async (e) => {
+    e.preventDefault();
+    if (!quick.trim()) return;
+    const ok = await onQuickAdd(quick.trim(), filter === "all" ? "dimenfy-internal" : filter);
+    if (ok) setQuick("");
+  };
+  const loading = hub.status === "connecting" || hub.status === "live" && !hub.ready.tasks;
+  let empty;
+  if (loading) empty = "Loading the live log\u2026";
+  else if (hub.status === "offline") empty = "Entries appear here when the hub is opened on claude.ai while signed in.";
+  else if (tasks.length === 0) empty = owner ? "No entries yet. Type what you just finished above and press Enter to log the first one." : "No entries yet. Steph's work appears here the moment she logs it.";
+  else empty = owner ? "No entries in this category yet. Type above and press Enter to log one." : "No entries in this category yet.";
+  return /* @__PURE__ */ React.createElement("section", { "aria-labelledby": "worklog", className: "flex scroll-mt-24 flex-col gap-6" }, /* @__PURE__ */ React.createElement(
+    SectionHeader,
+    {
+      id: "worklog",
+      eyebrow: "Daily work dump",
+      title: "Everything shipped, in one feed",
+      description: owner ? "Videos, graphics, posts, sheets, align-ups and Jos\xE9's requests. Every entry syncs live for leadership. Click a status to update it." : "Every entry links to its deliverable. Open Feedback on any entry to leave a note or record a decision.",
+      action: owner ? /* @__PURE__ */ React.createElement(GlowButton, { tone: "ghost", onClick: () => onCompose({}) }, /* @__PURE__ */ React.createElement(Sparkles, { className: "h-4 w-4 text-cyan-300", "aria-hidden": "true" }), "Full entry form") : null
+    }
+  ), /* @__PURE__ */ React.createElement(Glass, { className: "overflow-hidden" }, owner && /* @__PURE__ */ React.createElement("form", { onSubmit: submitQuick, className: "flex flex-col gap-3 border-b border-white/10 p-4 sm:flex-row sm:items-center sm:p-5" }, /* @__PURE__ */ React.createElement("label", { htmlFor: "quick-dump", className: "sr-only" }, "Quick task dump"), /* @__PURE__ */ React.createElement("div", { className: "relative min-w-0 flex-1" }, /* @__PURE__ */ React.createElement(Zap, { className: "pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-emerald-300", "aria-hidden": "true" }), /* @__PURE__ */ React.createElement(
+    "input",
+    {
+      id: "quick-dump",
+      value: quick,
+      onChange: (e) => setQuick(e.target.value),
+      placeholder: "What did you just finish? Press Enter to log it",
+      className: `${inputCls} !py-3 pl-10`
+    }
+  )), /* @__PURE__ */ React.createElement("div", { className: "flex gap-2" }, /* @__PURE__ */ React.createElement(GlowButton, { type: "submit", className: "flex-1 sm:flex-none" }, /* @__PURE__ */ React.createElement(Plus, { className: "h-4 w-4", "aria-hidden": "true" }), "Log it"), /* @__PURE__ */ React.createElement(GlowButton, { tone: "ghost", onClick: () => onCompose({ title: quick }), className: "flex-1 sm:flex-none" }, "Add details"))), /* @__PURE__ */ React.createElement("div", { className: "no-scrollbar flex gap-1 overflow-x-auto border-b border-white/10 px-3 py-2.5 sm:px-4", role: "tablist", "aria-label": "Filter by category" }, FILTERS.map((f) => {
+    const active = filter === f.id;
+    return /* @__PURE__ */ React.createElement(
+      "button",
+      {
+        key: f.id,
+        type: "button",
+        role: "tab",
+        "aria-selected": active,
+        onClick: () => setFilter(f.id),
+        className: `relative shrink-0 rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60 ${active ? "text-white" : "text-slate-400 hover:text-slate-200"}`
+      },
+      active && /* @__PURE__ */ React.createElement(motion.span, { layoutId: "filterPill", className: "absolute inset-0 rounded-full bg-white/10 ring-1 ring-white/20", transition: { type: "spring", bounce: 0.2, duration: 0.5 } }),
+      /* @__PURE__ */ React.createElement("span", { className: "relative flex items-center gap-2" }, f.label, /* @__PURE__ */ React.createElement("span", { className: "font-mono text-[10px] text-slate-500" }, counts[f.id]))
+    );
+  })), /* @__PURE__ */ React.createElement("ul", { className: "divide-y divide-white/5" }, /* @__PURE__ */ React.createElement(AnimatePresence, { initial: false }, visible.map((t) => /* @__PURE__ */ React.createElement(TaskRow, { key: t.id, task: t, canManage: owner, onCycleStatus, onOpenThread })))), !visible.length && /* @__PURE__ */ React.createElement("div", { className: "px-6 py-12 text-center text-sm text-slate-400" }, empty)));
+}
+function TaskComposer({ open, initial, canUpload, onUpload, onClose, onSubmit }) {
+  const [form, setForm] = useState(null);
+  const [error, setError] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(0);
+  useEffect(() => {
+    if (open) {
+      setForm({
+        title: initial && initial.title || "",
+        category: "legistai-ads",
+        priority: "Medium",
+        status: "Completed",
+        url: "",
+        notes: "",
+        hoursSaved: "",
+        needsApproval: false,
+        showcase: false,
+        campaign: "",
+        format: "",
+        platform: "",
+        files: []
+      });
+      setError("");
+      setSaving(false);
+    }
+  }, [open, initial]);
+  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e && e.target ? e.target.type === "checkbox" ? e.target.checked : e.target.value : e }));
+  const onFiles = async (e) => {
+    const picked = Array.from(e.target.files || []);
+    e.target.value = "";
+    for (const file of picked) {
+      setUploading((n) => n + 1);
+      const res = await onUpload(file);
+      setUploading((n) => n - 1);
+      if (res) setForm((f) => ({ ...f, files: [...f.files, res], showcase: f.showcase || isImage(res) || isVideo(res) }));
+    }
+  };
+  const submit = async (e) => {
+    e.preventDefault();
+    if (!form.title.trim()) {
+      setError("Add a task title so leadership knows what this entry is.");
+      return;
+    }
+    if (uploading) {
+      setError("Wait for the files to finish uploading.");
+      return;
+    }
+    setSaving(true);
+    const ok = await onSubmit({
+      title: form.title.trim(),
+      category: form.category,
+      priority: form.priority,
+      status: form.status,
+      url: normalizeUrl(form.url),
+      notes: form.notes.trim(),
+      hoursSaved: num(form.hoursSaved),
+      needsApproval: form.needsApproval,
+      showcase: form.showcase,
+      campaign: form.campaign.trim(),
+      format: form.format.trim(),
+      platform: form.platform.trim(),
+      files: form.files
+    });
+    if (!ok) setSaving(false);
+  };
+  return /* @__PURE__ */ React.createElement(Modal, { open: open && !!form, onClose, labelledBy: "composer-title" }, form && /* @__PURE__ */ React.createElement("form", { onSubmit: submit, className: "flex flex-col gap-5 p-6 sm:p-7" }, /* @__PURE__ */ React.createElement("div", { className: "flex items-start justify-between gap-4" }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("span", { className: "font-mono text-[11px] uppercase tracking-[0.2em] text-emerald-300" }, "New entry"), /* @__PURE__ */ React.createElement("h2", { id: "composer-title", className: "mt-1 font-display text-2xl font-semibold text-white" }, "Dump a task")), /* @__PURE__ */ React.createElement("button", { type: "button", onClick: onClose, "aria-label": "Close", className: "rounded-lg p-2 text-slate-400 hover:bg-white/5 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60" }, /* @__PURE__ */ React.createElement(X, { className: "h-5 w-5" }))), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { htmlFor: "task-title" }, "Task name"), /* @__PURE__ */ React.createElement("input", { id: "task-title", autoFocus: true, value: form.title, onChange: set("title"), placeholder: "e.g. Edited LegistAI launch reel, 3 cuts", className: inputCls }), error && /* @__PURE__ */ React.createElement("p", { className: "mt-1.5 text-xs text-rose-300" }, error)), /* @__PURE__ */ React.createElement("div", { className: "grid gap-4 sm:grid-cols-2" }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { htmlFor: "task-category" }, "Category"), /* @__PURE__ */ React.createElement("select", { id: "task-category", value: form.category, onChange: set("category"), className: `${inputCls} bg-[#0a0f1c]` }, CATEGORIES.map((c) => /* @__PURE__ */ React.createElement("option", { key: c.id, value: c.id }, c.label)))), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { htmlFor: "task-hours" }, "Hours saved (optional)"), /* @__PURE__ */ React.createElement("input", { id: "task-hours", type: "number", min: "0", step: "0.5", value: form.hoursSaved, onChange: set("hoursSaved"), placeholder: "0", className: inputCls }))), /* @__PURE__ */ React.createElement("div", { className: "grid gap-4 sm:grid-cols-2" }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { id: "priority-label" }, "Priority"), /* @__PURE__ */ React.createElement(Segmented, { id: "priority", options: ["High", "Medium", "Low"], value: form.priority, onChange: set("priority"), toneOf: (o) => PRIORITIES[o] })), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { id: "status-label" }, "Status"), /* @__PURE__ */ React.createElement(Segmented, { id: "status", options: STATUS_ORDER, value: form.status, onChange: set("status"), toneOf: (o) => STATUSES[o].tone }))), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { htmlFor: "task-url" }, "Deliverable URL"), /* @__PURE__ */ React.createElement("input", { id: "task-url", value: form.url, onChange: set("url"), placeholder: "Drive, Sheets, Figma or video link", className: inputCls })), canUpload && /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { htmlFor: "task-files" }, "Files"), /* @__PURE__ */ React.createElement("label", { htmlFor: "task-files", className: "flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-white/15 bg-white/[0.02] px-4 py-3 text-sm text-slate-300 transition hover:border-cyan-300/40 hover:bg-white/[0.04]" }, /* @__PURE__ */ React.createElement(Paperclip, { className: "h-4 w-4 text-cyan-300", "aria-hidden": "true" }), uploading ? `Uploading ${uploading}\u2026` : "Attach images, video or PDFs (up to 20 MB each)"), /* @__PURE__ */ React.createElement("input", { id: "task-files", type: "file", multiple: true, accept: "image/*,video/*,application/pdf", className: "hidden", onChange: onFiles }), form.files.length > 0 && /* @__PURE__ */ React.createElement("ul", { className: "mt-2 flex flex-wrap gap-2" }, form.files.map((f) => /* @__PURE__ */ React.createElement("li", { key: f.id, className: "inline-flex max-w-[240px] items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 py-1 pl-2.5 pr-1 text-[11px] text-slate-200" }, /* @__PURE__ */ React.createElement("span", { className: "truncate" }, f.name), /* @__PURE__ */ React.createElement("button", { type: "button", onClick: () => setForm((x) => ({ ...x, files: x.files.filter((y) => y.id !== f.id) })), "aria-label": `Remove ${f.name}`, className: "rounded p-0.5 text-slate-400 hover:bg-white/10 hover:text-white" }, /* @__PURE__ */ React.createElement(X, { className: "h-3 w-3" })))))), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { htmlFor: "task-notes" }, "Executive notes"), /* @__PURE__ */ React.createElement("textarea", { id: "task-notes", rows: 3, value: form.notes, onChange: set("notes"), placeholder: "Context, outcome, what leadership should look at", className: `${inputCls} resize-y` })), /* @__PURE__ */ React.createElement("div", { className: "grid gap-2 sm:grid-cols-2" }, /* @__PURE__ */ React.createElement("label", { htmlFor: "task-approval", className: "flex cursor-pointer items-center gap-3 rounded-xl border border-amber-400/20 bg-amber-400/5 px-4 py-3 text-sm text-amber-100" }, /* @__PURE__ */ React.createElement("input", { id: "task-approval", type: "checkbox", checked: form.needsApproval, onChange: set("needsApproval"), className: "h-4 w-4 accent-amber-300" }), "Requires executive approval"), /* @__PURE__ */ React.createElement("label", { htmlFor: "task-showcase", className: "flex cursor-pointer items-center gap-3 rounded-xl border border-cyan-400/20 bg-cyan-400/5 px-4 py-3 text-sm text-cyan-100" }, /* @__PURE__ */ React.createElement("input", { id: "task-showcase", type: "checkbox", checked: form.showcase, onChange: set("showcase"), className: "h-4 w-4 accent-cyan-300" }), "Show in creative gallery")), /* @__PURE__ */ React.createElement(AnimatePresence, { initial: false }, form.showcase && /* @__PURE__ */ React.createElement(motion.div, { initial: { height: 0, opacity: 0 }, animate: { height: "auto", opacity: 1 }, exit: { height: 0, opacity: 0 }, className: "overflow-hidden" }, /* @__PURE__ */ React.createElement("div", { className: "grid gap-4 sm:grid-cols-3" }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { htmlFor: "task-campaign" }, "Campaign"), /* @__PURE__ */ React.createElement("input", { id: "task-campaign", value: form.campaign, onChange: set("campaign"), placeholder: "LegistAI launch", className: inputCls })), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { htmlFor: "task-format" }, "Format"), /* @__PURE__ */ React.createElement("input", { id: "task-format", value: form.format, onChange: set("format"), placeholder: "1080 \xD7 1920 \xB7 0:30", className: inputCls })), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { htmlFor: "task-platform" }, "Platform"), /* @__PURE__ */ React.createElement("input", { id: "task-platform", value: form.platform, onChange: set("platform"), placeholder: "Reels, TikTok", className: inputCls }))))), /* @__PURE__ */ React.createElement("div", { className: "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end" }, /* @__PURE__ */ React.createElement(GlowButton, { tone: "ghost", onClick: onClose }, "Cancel"), /* @__PURE__ */ React.createElement(GlowButton, { type: "submit", disabled: saving || uploading > 0 }, /* @__PURE__ */ React.createElement(Check, { className: "h-4 w-4", "aria-hidden": "true" }), saving ? "Saving\u2026" : "Log task"))));
+}
+function authorName(c, profiles) {
+  const p = profiles[c.authorId];
+  return p && p.name || (c.byOwner ? "Steph" : "Someone");
+}
+function ThreadDrawer({ task, hub, profiles, onClose, onComment, onDecision, onDelete }) {
+  const [text, setText] = useState("");
+  const [sending, setSending] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const listRef = useRef(null);
+  const canWrite = hub.status === "live" && hub.canWrite !== false;
+  const me = hub.me;
+  useEscape(!!task, onClose);
+  useEffect(() => {
+    setConfirmDelete(false);
+    setText("");
+  }, [task && task.id]);
+  useEffect(() => {
+    if (listRef.current) listRef.current.scrollTop = listRef.current.scrollHeight;
+  }, [task && task.comments.length]);
+  const send = async (e) => {
+    e.preventDefault();
+    if (!text.trim() || sending) return;
+    setSending(true);
+    const ok = await onComment(task.id, text.trim());
+    setSending(false);
+    if (ok) setText("");
+  };
+  return /* @__PURE__ */ React.createElement(AnimatePresence, null, task && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(motion.div, { key: "scrim", className: "fixed inset-0 z-40 bg-black/55 backdrop-blur-[2px]", initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 }, onClick: onClose }), /* @__PURE__ */ React.createElement(
+    motion.aside,
+    {
+      key: "drawer",
+      role: "dialog",
+      "aria-modal": "true",
+      "aria-labelledby": "thread-title",
+      initial: { x: "100%" },
+      animate: { x: 0 },
+      exit: { x: "100%" },
+      transition: { type: "spring", damping: 30, stiffness: 280 },
+      className: "fixed bottom-0 right-0 top-0 z-50 flex w-full max-w-md flex-col border-l border-white/10 bg-[#070b15]/95 shadow-[-30px_0_80px_-20px_rgba(0,0,0,0.8)] backdrop-blur-xl",
+      style: { paddingTop: "env(safe-area-inset-top, 0px)", paddingBottom: "env(safe-area-inset-bottom, 0px)", paddingRight: "env(safe-area-inset-right, 0px)" }
+    },
+    /* @__PURE__ */ React.createElement("div", { className: "flex items-start justify-between gap-4 border-b border-white/10 p-5" }, /* @__PURE__ */ React.createElement("div", { className: "min-w-0" }, /* @__PURE__ */ React.createElement("span", { className: "font-mono text-[11px] uppercase tracking-[0.2em] text-cyan-300/80" }, "Executive feedback \xB7 ", task.id), /* @__PURE__ */ React.createElement("h2", { id: "thread-title", className: "mt-1.5 font-display text-lg font-semibold leading-snug text-white" }, task.title), /* @__PURE__ */ React.createElement("div", { className: "mt-3 flex flex-wrap gap-2" }, /* @__PURE__ */ React.createElement(Chip, { tone: statusOf(task.status).tone }, task.status), /* @__PURE__ */ React.createElement(Chip, { tone: catOf(task.category).tone }, catOf(task.category).label), /* @__PURE__ */ React.createElement(ApprovalChip, { task }))), /* @__PURE__ */ React.createElement("button", { type: "button", onClick: onClose, "aria-label": "Close feedback panel", className: "rounded-lg p-2 text-slate-400 hover:bg-white/5 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60" }, /* @__PURE__ */ React.createElement(X, { className: "h-5 w-5" }))),
+    /* @__PURE__ */ React.createElement("div", { ref: listRef, className: "flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto p-5" }, task.notes && /* @__PURE__ */ React.createElement("p", { className: "text-sm leading-relaxed text-slate-300" }, task.notes), safeHref(task.url) && /* @__PURE__ */ React.createElement("a", { href: safeHref(task.url), target: "_blank", rel: "noopener noreferrer", className: "inline-flex w-fit items-center gap-2 text-sm font-medium text-cyan-300 hover:text-cyan-200" }, "Open deliverable ", /* @__PURE__ */ React.createElement(ExternalLink, { className: "h-4 w-4", "aria-hidden": "true" })), /* @__PURE__ */ React.createElement(FileLinks, { files: filesOf(task) }), canWrite && /* @__PURE__ */ React.createElement("div", { className: "rounded-2xl border border-white/10 bg-white/[0.03] p-4" }, /* @__PURE__ */ React.createElement("p", { className: "text-xs font-medium text-slate-300" }, "Record a decision as ", /* @__PURE__ */ React.createElement("span", { className: "text-white" }, me && me.name || "you")), /* @__PURE__ */ React.createElement("div", { className: "mt-3 grid grid-cols-2 gap-2" }, /* @__PURE__ */ React.createElement(GlowButton, { onClick: () => onDecision(task.id, "approved"), className: "!px-3 !py-2 text-xs" }, /* @__PURE__ */ React.createElement(ShieldCheck, { className: "h-4 w-4", "aria-hidden": "true" }), "Approve"), /* @__PURE__ */ React.createElement(GlowButton, { tone: "rose", onClick: () => onDecision(task.id, "changes"), className: "!px-3 !py-2 text-xs" }, /* @__PURE__ */ React.createElement(AlertTriangle, { className: "h-4 w-4", "aria-hidden": "true" }), "Request changes"))), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("h3", { className: "font-mono text-[11px] uppercase tracking-[0.2em] text-slate-400" }, "Thread"), task.comments.length === 0 ? /* @__PURE__ */ React.createElement("p", { className: "mt-3 text-sm text-slate-500" }, "No notes yet. Executive feedback on this entry appears here for everyone with access.") : /* @__PURE__ */ React.createElement("ul", { className: "mt-3 flex flex-col gap-3" }, /* @__PURE__ */ React.createElement(AnimatePresence, { initial: false }, task.comments.map((c) => {
+      const p = profiles[c.authorId];
+      const name = authorName(c, profiles);
+      return /* @__PURE__ */ React.createElement(motion.li, { key: c.id, layout: true, initial: { opacity: 0, y: 10, scale: 0.98 }, animate: { opacity: 1, y: 0, scale: 1 }, transition: { duration: 0.3, ease } }, c.kind === "decision" ? /* @__PURE__ */ React.createElement("div", { className: `flex items-center gap-2 font-mono text-[11px] ${c.decision === "approved" ? "text-emerald-300/80" : "text-rose-300/80"}` }, /* @__PURE__ */ React.createElement("span", { className: "h-px flex-1 bg-white/10" }), name, " \xB7 ", c.decision === "approved" ? "approved" : "requested changes", " \xB7 ", fmtWhen(c.at), /* @__PURE__ */ React.createElement("span", { className: "h-px flex-1 bg-white/10" })) : /* @__PURE__ */ React.createElement("div", { className: `rounded-2xl border p-3.5 ${c.byOwner ? "border-white/10 bg-white/[0.03]" : "border-fuchsia-400/20 bg-fuchsia-400/[0.06]"}` }, /* @__PURE__ */ React.createElement("div", { className: "flex items-center justify-between gap-2 text-xs" }, /* @__PURE__ */ React.createElement("span", { className: "flex min-w-0 items-center gap-2 font-semibold text-white" }, p && /* @__PURE__ */ React.createElement("img", { src: p.avatarUrl, alt: "", className: "h-5 w-5 shrink-0 rounded-full" }), /* @__PURE__ */ React.createElement("span", { className: "truncate" }, name), !c.byOwner && /* @__PURE__ */ React.createElement("span", { className: "font-normal text-fuchsia-300" }, "Leadership")), /* @__PURE__ */ React.createElement("span", { className: "shrink-0 font-mono text-[10px] text-slate-500" }, fmtWhen(c.at))), /* @__PURE__ */ React.createElement("p", { className: "mt-1.5 whitespace-pre-wrap text-sm leading-relaxed text-slate-200" }, c.text)));
+    })))), hub.isOwner && /* @__PURE__ */ React.createElement("div", { className: "mt-auto pt-2" }, confirmDelete ? /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-2 text-xs text-slate-400" }, "Delete this entry and its thread for everyone?", /* @__PURE__ */ React.createElement("button", { type: "button", onClick: () => onDelete(task), className: "rounded-lg bg-rose-500/20 px-2.5 py-1 font-semibold text-rose-200 hover:bg-rose-500/30" }, "Delete"), /* @__PURE__ */ React.createElement("button", { type: "button", onClick: () => setConfirmDelete(false), className: "rounded-lg px-2.5 py-1 hover:bg-white/5" }, "Keep")) : /* @__PURE__ */ React.createElement("button", { type: "button", onClick: () => setConfirmDelete(true), className: "inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-rose-300" }, /* @__PURE__ */ React.createElement(Trash2, { className: "h-3.5 w-3.5", "aria-hidden": "true" }), "Delete entry"))),
+    canWrite ? /* @__PURE__ */ React.createElement("form", { onSubmit: send, className: "flex flex-col gap-2.5 border-t border-white/10 p-4" }, /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-2 text-xs text-slate-400" }, me && me.avatarUrl && /* @__PURE__ */ React.createElement("img", { src: me.avatarUrl, alt: "", className: "h-5 w-5 rounded-full" }), "Posting as ", /* @__PURE__ */ React.createElement("span", { className: "text-slate-200" }, me && me.name || "you")), /* @__PURE__ */ React.createElement("div", { className: "flex items-end gap-2" }, /* @__PURE__ */ React.createElement("label", { htmlFor: "thread-text", className: "sr-only" }, "Executive note"), /* @__PURE__ */ React.createElement(
+      "textarea",
+      {
+        id: "thread-text",
+        rows: 2,
+        value: text,
+        onChange: (e) => setText(e.target.value),
+        onKeyDown: (e) => {
+          if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) send(e);
+        },
+        placeholder: "Leave a note on this entry",
+        className: `${inputCls} resize-none`
+      }
+    ), /* @__PURE__ */ React.createElement(GlowButton, { type: "submit", disabled: sending, "aria-label": "Send note", className: "!px-3 !py-3" }, /* @__PURE__ */ React.createElement(Send, { className: "h-4 w-4", "aria-hidden": "true" })))) : /* @__PURE__ */ React.createElement("p", { className: "border-t border-white/10 p-4 text-xs text-slate-400" }, hub.status === "live" ? "You have view access. Ask Steph for edit access to leave notes or record decisions." : "Sign in on claude.ai to leave notes or record decisions.")
+  )));
+}
+function ApprovalColumn({ title, icon: Icon, tone, items, empty, approve, onOpenThread, onDecision }) {
+  const t = TONES[tone];
+  return /* @__PURE__ */ React.createElement(Glass, { className: `relative min-w-0 overflow-hidden p-5 sm:p-6 ${items.length ? `border-2 ${t.border}` : ""}` }, items.length > 0 && /* @__PURE__ */ React.createElement("div", { "aria-hidden": "true", className: `absolute -right-16 -top-16 h-48 w-48 rounded-full blur-3xl ${t.bg}` }), /* @__PURE__ */ React.createElement("div", { className: "relative flex items-center justify-between gap-3" }, /* @__PURE__ */ React.createElement("h3", { className: "inline-flex items-center gap-2 font-display text-lg font-semibold text-white" }, /* @__PURE__ */ React.createElement(Icon, { className: `h-5 w-5 ${t.text}`, "aria-hidden": "true" }), title), /* @__PURE__ */ React.createElement("span", { className: `rounded-full px-2.5 py-0.5 font-mono text-xs font-bold ${items.length ? `${t.bg} ${t.text}` : "text-slate-500"}` }, items.length)), /* @__PURE__ */ React.createElement("ul", { className: "relative mt-4 flex flex-col gap-3" }, /* @__PURE__ */ React.createElement(AnimatePresence, { initial: false }, items.map((task) => /* @__PURE__ */ React.createElement(
+    motion.li,
+    {
+      key: task.id,
+      layout: true,
+      initial: { opacity: 0, scale: 0.97 },
+      animate: { opacity: 1, scale: 1 },
+      exit: { opacity: 0, scale: 0.95 },
+      className: "rounded-xl border border-white/10 bg-[#05070d]/60 p-4"
+    },
+    /* @__PURE__ */ React.createElement("div", { className: "flex flex-wrap items-center gap-2 font-mono text-[11px] text-slate-500" }, /* @__PURE__ */ React.createElement("span", null, task.id), /* @__PURE__ */ React.createElement("span", null, "\xB7"), /* @__PURE__ */ React.createElement("span", null, catOf(task.category).label), /* @__PURE__ */ React.createElement("span", null, "\xB7"), /* @__PURE__ */ React.createElement("span", { className: t.text }, daysSince(task.at) === 0 ? "since today" : `${daysSince(task.at)}d waiting`), task.approval === "changes" && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("span", null, "\xB7"), /* @__PURE__ */ React.createElement("span", { className: "text-rose-300" }, "changes requested"))),
+    /* @__PURE__ */ React.createElement("p", { className: "mt-1.5 text-sm font-medium text-slate-100" }, task.title),
+    task.notes && /* @__PURE__ */ React.createElement("p", { className: "mt-1 line-clamp-2 text-xs text-slate-400" }, task.notes),
+    /* @__PURE__ */ React.createElement("div", { className: "mt-3 flex flex-wrap gap-2" }, /* @__PURE__ */ React.createElement(GlowButton, { tone: "ghost", onClick: () => onOpenThread(task.id), className: "!px-3 !py-1.5 text-xs" }, /* @__PURE__ */ React.createElement(MessageSquare, { className: "h-3.5 w-3.5", "aria-hidden": "true" }), "Open thread"), approve && /* @__PURE__ */ React.createElement(GlowButton, { tone: "amber", onClick: () => onDecision(task.id, "approved"), className: "!px-3 !py-1.5 text-xs" }, /* @__PURE__ */ React.createElement(Check, { className: "h-3.5 w-3.5", "aria-hidden": "true" }), "Approve"))
+  )))), !items.length && /* @__PURE__ */ React.createElement("p", { className: "relative mt-4 text-sm text-slate-500" }, empty));
+}
+function Approvals({ tasks, canDecide, onOpenThread, onDecision }) {
+  const awaiting = tasks.filter((t) => t.needsApproval && t.approval !== "approved" && t.status !== "Blocked");
+  const blocked = tasks.filter((t) => t.status === "Blocked");
+  return /* @__PURE__ */ React.createElement("section", { "aria-labelledby": "approvals", className: "flex scroll-mt-24 flex-col gap-6" }, /* @__PURE__ */ React.createElement(
+    SectionHeader,
+    {
+      id: "approvals",
+      eyebrow: "Requires leadership",
+      title: "Approvals and blockers",
+      description: "Items waiting on an executive decision or held up by something outside Steph's control. Approve here or open the thread to comment."
+    }
+  ), /* @__PURE__ */ React.createElement("div", { className: "grid gap-5 lg:grid-cols-2" }, /* @__PURE__ */ React.createElement(ApprovalColumn, { title: "Require approval", icon: Hourglass, tone: "amber", items: awaiting, approve: canDecide, empty: "Nothing is waiting on leadership right now.", onOpenThread, onDecision }), /* @__PURE__ */ React.createElement(ApprovalColumn, { title: "Blockers", icon: AlertTriangle, tone: "rose", items: blocked, empty: "No blockers. Every active item is moving.", onOpenThread, onDecision })));
+}
+function PayrollLinkCard({ url, calculatorUrl }) {
+  const href = safeHref(url);
+  const calc = safeHref(calculatorUrl);
+  if (!href && !calc) return null;
+  return /* @__PURE__ */ React.createElement(Glass, { className: "flex flex-col gap-3 border-amber-400/25 p-5 sm:flex-row sm:items-center sm:justify-between" }, /* @__PURE__ */ React.createElement("div", { className: "flex items-start gap-3" }, /* @__PURE__ */ React.createElement("span", { className: "grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-amber-400/30 bg-amber-400/10 text-amber-300" }, /* @__PURE__ */ React.createElement(Wallet, { className: "h-5 w-5", "aria-hidden": "true" })), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("p", { className: "font-medium text-white" }, "Payroll \xB7 Dimenfy team for LegistAI"), /* @__PURE__ */ React.createElement("p", { className: "mt-0.5 inline-flex items-center gap-1.5 text-xs text-slate-400" }, /* @__PURE__ */ React.createElement(Lock, { className: "h-3 w-3", "aria-hidden": "true" }), "Only you see this card. The calculator is password protected and shared with Jos\xE9 only."))), /* @__PURE__ */ React.createElement("div", { className: "flex shrink-0 flex-wrap gap-2" }, calc && /* @__PURE__ */ React.createElement("a", { href: calc, target: "_blank", rel: "noopener noreferrer", className: "inline-flex items-center justify-center gap-2 rounded-xl bg-amber-300 px-4 py-2.5 text-sm font-semibold text-slate-950 shadow-[0_0_30px_-8px_rgba(251,191,36,0.7)] hover:bg-amber-200" }, "Open payroll ", /* @__PURE__ */ React.createElement(ArrowUpRight, { className: "h-4 w-4", "aria-hidden": "true" })), href && /* @__PURE__ */ React.createElement("a", { href, target: "_blank", rel: "noopener noreferrer", className: "inline-flex items-center justify-center gap-2 rounded-xl border border-amber-400/30 bg-amber-400/10 px-4 py-2.5 text-sm font-semibold text-amber-100 hover:bg-amber-400/20" }, /* @__PURE__ */ React.createElement(FileSpreadsheet, { className: "h-4 w-4", "aria-hidden": "true" }), "Source sheet")));
+}
+const profilePhotos = (p) => Array.isArray(p.photos) ? p.photos : [];
+const profileName = (p, people) => p.preferredName || people[p.id] && people[p.id].name || "Teammate";
+function ProfileAvatar({ profile, people, size = "h-14 w-14" }) {
+  const photo = profilePhotos(profile)[0];
+  const src = photo ? blobUrl(photo.id) : people[profile.id] && people[profile.id].avatarUrl;
+  return /* @__PURE__ */ React.createElement("span", { className: `relative shrink-0 overflow-hidden rounded-2xl p-[2px] ${size}` }, /* @__PURE__ */ React.createElement("span", { "aria-hidden": "true", className: "absolute inset-0 bg-gradient-to-br from-rose-400 via-fuchsia-400 to-cyan-400" }), /* @__PURE__ */ React.createElement("span", { className: "relative grid h-full w-full place-items-center overflow-hidden rounded-[14px] bg-[#0a0f1c]" }, src ? /* @__PURE__ */ React.createElement("img", { src, alt: "", className: "h-full w-full object-cover" }) : /* @__PURE__ */ React.createElement(Smile, { className: "h-6 w-6 text-slate-500", "aria-hidden": "true" })));
+}
+function ProfileCard({ profile, people, isMe, onOpen, onEdit }) {
+  const photos = profilePhotos(profile);
+  return /* @__PURE__ */ React.createElement(motion.li, { layout: true, initial: { opacity: 0, y: 14 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0, scale: 0.96 }, transition: { duration: 0.4, ease }, className: "min-w-0" }, /* @__PURE__ */ React.createElement(Glass, { whileHover: { y: -4 }, className: "group flex h-full flex-col gap-4 p-5 transition-[border-color,box-shadow] duration-300 hover:border-fuchsia-300/40 hover:shadow-[0_0_50px_-18px_rgba(232,121,249,0.6)]" }, /* @__PURE__ */ React.createElement("button", { type: "button", onClick: onOpen, className: "flex items-center gap-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60 rounded-xl" }, /* @__PURE__ */ React.createElement(ProfileAvatar, { profile, people }), /* @__PURE__ */ React.createElement("span", { className: "min-w-0" }, /* @__PURE__ */ React.createElement("span", { className: "flex items-center gap-2" }, /* @__PURE__ */ React.createElement("span", { className: "truncate font-display text-lg font-semibold text-white" }, profileName(profile, people)), isMe && /* @__PURE__ */ React.createElement("span", { className: "shrink-0 rounded-full bg-fuchsia-400/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-fuchsia-200" }, "You")), profile.role && /* @__PURE__ */ React.createElement("span", { className: "block truncate text-sm text-slate-400" }, profile.role))), /* @__PURE__ */ React.createElement("div", { className: "rounded-xl border border-white/10 bg-[#05070d]/50 p-3.5" }, /* @__PURE__ */ React.createElement("p", { className: "flex items-center justify-between gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-cyan-300/80" }, "Working on", profile.workingOnAt && /* @__PURE__ */ React.createElement("span", { className: "normal-case tracking-normal text-slate-500" }, fmtAgo(profile.workingOnAt))), /* @__PURE__ */ React.createElement("p", { className: `mt-1.5 text-sm leading-relaxed ${profile.workingOn ? "text-slate-100" : "italic text-slate-500"}` }, profile.workingOn || "Nothing shared yet.")), profile.about && /* @__PURE__ */ React.createElement("p", { className: "line-clamp-3 text-sm leading-relaxed text-slate-400" }, profile.about), photos.length > 0 && /* @__PURE__ */ React.createElement("ul", { className: "mt-auto flex gap-2 pt-1" }, photos.map((ph, i) => /* @__PURE__ */ React.createElement("li", { key: ph.id }, /* @__PURE__ */ React.createElement(
+    motion.button,
+    {
+      type: "button",
+      onClick: onOpen,
+      initial: { rotate: TILTS[i % 4] },
+      whileHover: { rotate: 0, y: -3, scale: 1.06 },
+      className: "block overflow-hidden rounded-lg border-[3px] border-white/90 bg-white/90 shadow-[0_10px_24px_-10px_rgba(0,0,0,0.9)]",
+      "aria-label": `Open ${profileName(profile, people)}'s photos`
+    },
+    /* @__PURE__ */ React.createElement("img", { src: blobUrl(ph.id), alt: "", className: "h-14 w-14 object-cover" })
+  )))), isMe && /* @__PURE__ */ React.createElement("button", { type: "button", onClick: onEdit, className: `${photos.length ? "" : "mt-auto"} inline-flex w-fit items-center gap-1.5 text-xs font-medium text-fuchsia-200 hover:text-white` }, /* @__PURE__ */ React.createElement(Pencil, { className: "h-3.5 w-3.5", "aria-hidden": "true" }), "Edit my profile")));
+}
+function ProfileViewer({ profile, people, onClose }) {
+  const [index, setIndex] = useState(0);
+  useEffect(() => {
+    setIndex(0);
+  }, [profile && profile.id]);
+  const photos = profile ? profilePhotos(profile) : [];
+  const photo = photos[index] || null;
+  return /* @__PURE__ */ React.createElement(Modal, { open: !!profile, onClose, labelledBy: "profile-title" }, profile && /* @__PURE__ */ React.createElement("div", { className: "flex flex-col" }, photo && /* @__PURE__ */ React.createElement("div", { className: "relative bg-black" }, /* @__PURE__ */ React.createElement(AnimatePresence, { mode: "wait" }, /* @__PURE__ */ React.createElement(motion.img, { key: photo.id, src: blobUrl(photo.id), alt: "", initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 }, className: "max-h-[50vh] w-full object-contain" })), photos.length > 1 && /* @__PURE__ */ React.createElement("div", { className: "absolute inset-x-3 top-1/2 flex -translate-y-1/2 justify-between" }, /* @__PURE__ */ React.createElement("button", { type: "button", onClick: () => setIndex((i) => (i - 1 + photos.length) % photos.length), "aria-label": "Previous photo", className: "grid h-9 w-9 place-items-center rounded-full bg-black/50 text-white backdrop-blur hover:bg-black/70" }, /* @__PURE__ */ React.createElement(ChevronLeft, { className: "h-5 w-5" })), /* @__PURE__ */ React.createElement("button", { type: "button", onClick: () => setIndex((i) => (i + 1) % photos.length), "aria-label": "Next photo", className: "grid h-9 w-9 place-items-center rounded-full bg-black/50 text-white backdrop-blur hover:bg-black/70" }, /* @__PURE__ */ React.createElement(ChevronRight, { className: "h-5 w-5" })))), /* @__PURE__ */ React.createElement("div", { className: "flex flex-col gap-4 p-6" }, /* @__PURE__ */ React.createElement("div", { className: "flex items-start justify-between gap-3" }, /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-3" }, /* @__PURE__ */ React.createElement(ProfileAvatar, { profile, people }), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("h2", { id: "profile-title", className: "font-display text-xl font-semibold text-white" }, profileName(profile, people)), profile.role && /* @__PURE__ */ React.createElement("p", { className: "text-sm text-slate-400" }, profile.role))), /* @__PURE__ */ React.createElement("button", { type: "button", onClick: onClose, "aria-label": "Close profile", className: "rounded-lg p-2 text-slate-400 hover:bg-white/5 hover:text-white" }, /* @__PURE__ */ React.createElement(X, { className: "h-5 w-5" }))), /* @__PURE__ */ React.createElement("div", { className: "rounded-xl border border-white/10 bg-white/[0.03] p-4" }, /* @__PURE__ */ React.createElement("p", { className: "font-mono text-[10px] uppercase tracking-[0.18em] text-cyan-300/80" }, "Working on", profile.workingOnAt ? ` \xB7 ${fmtAgo(profile.workingOnAt)}` : ""), /* @__PURE__ */ React.createElement("p", { className: "mt-1.5 whitespace-pre-wrap text-sm text-slate-100" }, profile.workingOn || "Nothing shared yet.")), profile.about && /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("p", { className: "font-mono text-[10px] uppercase tracking-[0.18em] text-rose-200/80" }, "About"), /* @__PURE__ */ React.createElement("p", { className: "mt-1.5 whitespace-pre-wrap text-sm leading-relaxed text-slate-300" }, profile.about)))));
+}
+function ProfileEditor({ open, profile, fallbackName, canUpload, onUpload, onRemovePhoto, onClose, onSave }) {
+  const [form, setForm] = useState(null);
+  const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(0);
+  const fileRef = useRef(null);
+  useEffect(() => {
+    if (open) {
+      const p = profile || {};
+      setForm({ preferredName: p.preferredName || "", role: p.role || "", workingOn: p.workingOn || "", about: p.about || "", photos: profilePhotos(p) });
+      setSaving(false);
+    }
+  }, [open, profile]);
+  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+  const onFiles = async (e) => {
+    const picked = Array.from(e.target.files || []).filter((f) => /^image\//.test(f.type));
+    e.target.value = "";
+    for (const file of picked) {
+      if (form.photos.length + uploading >= MAX_PROFILE_PHOTOS) break;
+      setUploading((n) => n + 1);
+      const res = await onUpload(file);
+      setUploading((n) => n - 1);
+      if (res) setForm((f) => f.photos.length >= MAX_PROFILE_PHOTOS ? f : { ...f, photos: [...f.photos, { id: res.id }] });
+    }
+  };
+  const submit = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    const ok = await onSave(form);
+    if (!ok) setSaving(false);
+  };
+  return /* @__PURE__ */ React.createElement(Modal, { open: open && !!form, onClose, labelledBy: "profile-editor-title" }, form && /* @__PURE__ */ React.createElement("form", { onSubmit: submit, className: "flex flex-col gap-5 p-6 sm:p-7" }, /* @__PURE__ */ React.createElement("div", { className: "flex items-start justify-between gap-4" }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("span", { className: "font-mono text-[11px] uppercase tracking-[0.2em] text-fuchsia-300" }, "Your profile"), /* @__PURE__ */ React.createElement("h2", { id: "profile-editor-title", className: "mt-1 font-display text-2xl font-semibold text-white" }, "Tell the team about you"), /* @__PURE__ */ React.createElement("p", { className: "mt-1 text-sm text-slate-400" }, "Everyone with access to the hub can see your profile.")), /* @__PURE__ */ React.createElement("button", { type: "button", onClick: onClose, "aria-label": "Close", className: "rounded-lg p-2 text-slate-400 hover:bg-white/5 hover:text-white" }, /* @__PURE__ */ React.createElement(X, { className: "h-5 w-5" }))), /* @__PURE__ */ React.createElement("div", { className: "grid gap-4 sm:grid-cols-2" }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { htmlFor: "profile-name" }, "Name to show"), /* @__PURE__ */ React.createElement("input", { id: "profile-name", value: form.preferredName, onChange: set("preferredName"), maxLength: 60, placeholder: fallbackName || "Your name", className: inputCls })), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { htmlFor: "profile-role" }, "Role"), /* @__PURE__ */ React.createElement("input", { id: "profile-role", value: form.role, onChange: set("role"), maxLength: 60, placeholder: "Video Editor, Designer\u2026", className: inputCls }))), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { htmlFor: "profile-working" }, "What I'm working on"), /* @__PURE__ */ React.createElement("textarea", { id: "profile-working", rows: 2, value: form.workingOn, onChange: set("workingOn"), maxLength: 200, placeholder: "Editing the LegistAI testimonial cut, due Friday", className: `${inputCls} resize-y` })), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { htmlFor: "profile-about" }, "About me"), /* @__PURE__ */ React.createElement("textarea", { id: "profile-about", rows: 3, value: form.about, onChange: set("about"), maxLength: 400, placeholder: "Where you're based, what you love, a fun fact", className: `${inputCls} resize-y` })), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("span", { className: "mb-1.5 block text-xs font-medium text-slate-300" }, "Photos (", form.photos.length, "/", MAX_PROFILE_PHOTOS, ")"), /* @__PURE__ */ React.createElement("div", { className: "flex flex-wrap gap-3" }, form.photos.map((ph) => /* @__PURE__ */ React.createElement("div", { key: ph.id, className: "relative" }, /* @__PURE__ */ React.createElement("img", { src: blobUrl(ph.id), alt: "", className: "h-20 w-20 rounded-xl border-2 border-white/80 object-cover" }), /* @__PURE__ */ React.createElement(
+    "button",
+    {
+      type: "button",
+      onClick: () => {
+        setForm((f) => ({ ...f, photos: f.photos.filter((x) => x.id !== ph.id) }));
+        onRemovePhoto(ph.id);
+      },
+      "aria-label": "Remove photo",
+      className: "absolute -right-2 -top-2 grid h-6 w-6 place-items-center rounded-full bg-rose-500 text-white shadow"
+    },
+    /* @__PURE__ */ React.createElement(X, { className: "h-3.5 w-3.5" })
+  ))), canUpload && form.photos.length + uploading < MAX_PROFILE_PHOTOS && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("button", { type: "button", onClick: () => fileRef.current && fileRef.current.click(), className: "grid h-20 w-20 place-items-center rounded-xl border-2 border-dashed border-fuchsia-300/30 text-fuchsia-200/80 hover:border-fuchsia-300/60", "aria-label": "Add a photo" }, /* @__PURE__ */ React.createElement("span", { className: "flex flex-col items-center gap-1 text-[10px]" }, /* @__PURE__ */ React.createElement(ImagePlus, { className: "h-5 w-5", "aria-hidden": "true" }), uploading ? "Uploading" : "Add")), /* @__PURE__ */ React.createElement("input", { ref: fileRef, id: "profile-photos", type: "file", accept: "image/*", multiple: true, className: "hidden", onChange: onFiles }))), !canUpload && /* @__PURE__ */ React.createElement("p", { className: "mt-2 text-xs text-slate-500" }, "Photo uploads aren't available with your access. Ask Steph to give you edit access to add photos.")), /* @__PURE__ */ React.createElement("div", { className: "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end" }, /* @__PURE__ */ React.createElement(GlowButton, { tone: "ghost", onClick: onClose }, "Cancel"), /* @__PURE__ */ React.createElement(GlowButton, { type: "submit", disabled: saving || uploading > 0 }, /* @__PURE__ */ React.createElement(Check, { className: "h-4 w-4", "aria-hidden": "true" }), saving ? "Saving\u2026" : "Save profile"))));
+}
+function Team({ hub, people, canJoin, onEdit, onOpen }) {
+  const myId = hub.me && hub.me.id;
+  const mine = hub.profiles.find((p) => p.id === myId);
+  const others = hub.profiles.filter((p) => p.id !== myId);
+  const ordered = mine ? [mine, ...others] : others;
+  const loading = hub.status === "connecting" || hub.status === "live" && !hub.ready.profiles;
+  return /* @__PURE__ */ React.createElement("section", { "aria-labelledby": "team", className: "flex scroll-mt-24 flex-col gap-6" }, /* @__PURE__ */ React.createElement(
+    SectionHeader,
+    {
+      id: "team",
+      eyebrow: "The team",
+      title: "Who's working on what",
+      description: "Everyone on the Dimenfy and LegistAI team keeps a profile here: what they're working on right now, a little about them, and a few photos.",
+      action: canJoin ? /* @__PURE__ */ React.createElement(GlowButton, { tone: mine ? "ghost" : "emerald", onClick: onEdit }, mine ? /* @__PURE__ */ React.createElement(Pencil, { className: "h-4 w-4 text-fuchsia-300", "aria-hidden": "true" }) : /* @__PURE__ */ React.createElement(UserPlus, { className: "h-4 w-4", "aria-hidden": "true" }), mine ? "Edit my profile" : "Create my profile") : null
+    }
+  ), ordered.length ? /* @__PURE__ */ React.createElement(motion.ul, { layout: true, className: "grid gap-5 sm:grid-cols-2 lg:grid-cols-3" }, /* @__PURE__ */ React.createElement(AnimatePresence, { initial: false }, ordered.map((p) => /* @__PURE__ */ React.createElement(ProfileCard, { key: p.id, profile: p, people, isMe: p.id === myId, onOpen: () => onOpen(p.id), onEdit })))) : /* @__PURE__ */ React.createElement(Glass, { className: "grid place-items-center gap-2 px-6 py-14 text-center" }, /* @__PURE__ */ React.createElement(Users, { className: "h-8 w-8 text-fuchsia-300/70", "aria-hidden": "true" }), /* @__PURE__ */ React.createElement("p", { className: "text-sm text-slate-300" }, loading ? "Loading the team\u2026" : "No profiles yet."), !loading && /* @__PURE__ */ React.createElement("p", { className: "max-w-md text-xs text-slate-500" }, canJoin ? "Be the first: create your profile and share what you're working on." : "Profiles appear here as teammates create them.")));
+}
+const ASSET_ICON = { Video: Clapperboard, "Ad Graphic": Palette, "Brand Asset": Sparkles };
+const ASSET_TONE = { Video: "cyan", "Ad Graphic": "emerald", "Brand Asset": "indigo" };
+function AssetArt({ task, large = false }) {
+  const [a, b] = catOf(task.category).art;
+  const type = assetType(task.category);
+  const Icon = ASSET_ICON[type];
+  const cover = filesOf(task).find(isImage);
+  if (cover) {
+    return /* @__PURE__ */ React.createElement("div", { className: "relative h-full w-full overflow-hidden bg-[#0a0f1c]" }, /* @__PURE__ */ React.createElement("img", { src: blobUrl(cover.id), alt: "", className: `h-full w-full ${large ? "object-contain" : "object-cover"}` }), type === "Video" && /* @__PURE__ */ React.createElement("span", { className: "absolute inset-0 grid place-items-center" }, /* @__PURE__ */ React.createElement("span", { className: "grid h-11 w-11 place-items-center rounded-full bg-white/90 text-slate-950 shadow-[0_0_30px_rgba(255,255,255,0.5)]" }, /* @__PURE__ */ React.createElement(Play, { className: "ml-0.5 h-5 w-5", fill: "currentColor", "aria-hidden": "true" }))));
+  }
+  return /* @__PURE__ */ React.createElement(
+    "div",
+    {
+      className: "relative h-full w-full overflow-hidden",
+      style: { background: `radial-gradient(120% 90% at 0% 0%, ${a}55, transparent 60%), radial-gradient(110% 90% at 100% 100%, ${b}55, transparent 60%), #0a0f1c` }
+    },
+    /* @__PURE__ */ React.createElement("div", { "aria-hidden": "true", className: "absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.35)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.35)_1px,transparent_1px)] [background-size:28px_28px]" }),
+    /* @__PURE__ */ React.createElement("div", { className: "absolute inset-0 grid place-items-center" }, /* @__PURE__ */ React.createElement(
+      "div",
+      {
+        className: "relative overflow-hidden rounded-xl border border-white/25 bg-white/[0.07] shadow-[0_20px_60px_-20px_rgba(0,0,0,0.9)] backdrop-blur-sm",
+        style: { aspectRatio: ratioFrom(task.format, task.category), height: large ? "70%" : "62%", maxWidth: "88%" }
+      },
+      /* @__PURE__ */ React.createElement("div", { className: "absolute inset-0", style: { background: `linear-gradient(160deg, ${a}40, transparent 55%, ${b}40)` } }),
+      /* @__PURE__ */ React.createElement("div", { className: "absolute inset-0 grid place-items-center" }, type === "Video" ? /* @__PURE__ */ React.createElement("span", { className: "grid h-11 w-11 place-items-center rounded-full bg-white/90 text-slate-950 shadow-[0_0_30px_rgba(255,255,255,0.5)]" }, /* @__PURE__ */ React.createElement(Play, { className: "ml-0.5 h-5 w-5", fill: "currentColor", "aria-hidden": "true" })) : /* @__PURE__ */ React.createElement(Icon, { className: "h-8 w-8 text-white/80", "aria-hidden": "true" })),
+      /* @__PURE__ */ React.createElement("div", { className: "absolute inset-x-[12%] bottom-[10%] flex flex-col gap-1.5" }, /* @__PURE__ */ React.createElement("span", { className: "h-1.5 w-4/5 rounded-full bg-white/50" }), /* @__PURE__ */ React.createElement("span", { className: "h-1.5 w-1/2 rounded-full bg-white/30" }))
+    ))
+  );
+}
+function Gallery({ tasks, hub }) {
+  const [type, setType] = useState("All");
+  const [openIndex, setOpenIndex] = useState(null);
+  const showcase = useMemo(() => tasks.filter((t) => t.showcase), [tasks]);
+  const types = ["All", "Video", "Ad Graphic", "Brand Asset"].filter((t) => t === "All" || showcase.some((s) => assetType(s.category) === t));
+  const visible = showcase.filter((t) => type === "All" || assetType(t.category) === type);
+  const current = openIndex === null ? null : visible[openIndex] || null;
+  const currentVideo = current ? filesOf(current).find(isVideo) : null;
+  const close = useCallback(() => setOpenIndex(null), []);
+  const step = useCallback((d) => setOpenIndex((i) => i === null || !visible.length ? i : (i + d + visible.length) % visible.length), [visible.length]);
+  useEffect(() => {
+    if (openIndex === null) return void 0;
+    const onKey = (e) => {
+      if (e.key === "ArrowRight") step(1);
+      if (e.key === "ArrowLeft") step(-1);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [openIndex, step]);
+  return /* @__PURE__ */ React.createElement("section", { "aria-labelledby": "gallery", className: "flex scroll-mt-24 flex-col gap-6" }, /* @__PURE__ */ React.createElement(
+    SectionHeader,
+    {
+      id: "gallery",
+      eyebrow: "Creative & motion",
+      title: "Recent creative for LegistAI",
+      description: "Video edits, ad graphics and brand assets from the worklog. Open any card for campaign details and the source file.",
+      action: types.length > 2 ? /* @__PURE__ */ React.createElement("div", { className: "flex gap-1 rounded-full border border-white/10 bg-white/[0.03] p-1" }, types.map((t) => /* @__PURE__ */ React.createElement(
+        "button",
+        {
+          key: t,
+          type: "button",
+          onClick: () => {
+            setType(t);
+            setOpenIndex(null);
+          },
+          "aria-pressed": type === t,
+          className: `relative rounded-full px-3 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60 ${type === t ? "text-white" : "text-slate-400 hover:text-slate-200"}`
+        },
+        type === t && /* @__PURE__ */ React.createElement(motion.span, { layoutId: "galleryPill", className: "absolute inset-0 rounded-full bg-white/10 ring-1 ring-white/20" }),
+        /* @__PURE__ */ React.createElement("span", { className: "relative" }, t)
+      ))) : null
+    }
+  ), visible.length === 0 ? /* @__PURE__ */ React.createElement(Glass, { className: "grid place-items-center gap-2 px-6 py-14 text-center" }, /* @__PURE__ */ React.createElement(Clapperboard, { className: "h-8 w-8 text-cyan-300/70", "aria-hidden": "true" }), /* @__PURE__ */ React.createElement("p", { className: "text-sm text-slate-300" }, "No creative in the gallery yet."), /* @__PURE__ */ React.createElement("p", { className: "max-w-md text-xs text-slate-500" }, hub.isOwner ? "Attach an image or video when you log a task, or tick \u201CShow in creative gallery\u201D, and it appears here." : "Videos, ads and brand assets appear here as Steph logs them.")) : /* @__PURE__ */ React.createElement(motion.ul, { layout: true, className: "grid gap-5 sm:grid-cols-2 lg:grid-cols-3" }, /* @__PURE__ */ React.createElement(AnimatePresence, { initial: false }, visible.map((t, i) => {
+    const kind = assetType(t.category);
+    return /* @__PURE__ */ React.createElement(motion.li, { key: t.id, layout: true, initial: { opacity: 0, scale: 0.96 }, animate: { opacity: 1, scale: 1 }, exit: { opacity: 0, scale: 0.94 }, transition: { duration: 0.4, ease } }, /* @__PURE__ */ React.createElement(
+      motion.button,
+      {
+        type: "button",
+        onClick: () => setOpenIndex(i),
+        whileHover: { y: -6 },
+        className: "group block w-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.035] text-left backdrop-blur-md transition-[border-color,box-shadow] duration-300 hover:border-cyan-300/40 hover:shadow-[0_0_50px_-15px_rgba(34,211,238,0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70"
+      },
+      /* @__PURE__ */ React.createElement("div", { className: "relative aspect-[4/3] w-full overflow-hidden" }, /* @__PURE__ */ React.createElement("div", { className: "h-full w-full transition-transform duration-700 group-hover:scale-[1.04]" }, /* @__PURE__ */ React.createElement(AssetArt, { task: t })), /* @__PURE__ */ React.createElement("span", { className: "absolute left-3 top-3" }, /* @__PURE__ */ React.createElement(Chip, { tone: ASSET_TONE[kind] }, kind)), t.format && /* @__PURE__ */ React.createElement("span", { className: "absolute bottom-3 right-3 rounded-md bg-black/50 px-2 py-1 font-mono text-[10px] text-slate-200 backdrop-blur" }, t.format)),
+      /* @__PURE__ */ React.createElement("div", { className: "p-4" }, /* @__PURE__ */ React.createElement("p", { className: "font-medium leading-snug text-slate-100" }, t.title), /* @__PURE__ */ React.createElement("p", { className: "mt-1 text-xs text-slate-400" }, t.campaign ? `${t.campaign} \xB7 ` : "", fmtWhen(t.at)))
+    ));
+  }))), /* @__PURE__ */ React.createElement(Modal, { open: !!current, onClose: close, labelledBy: "lightbox-title", wide: true }, current && /* @__PURE__ */ React.createElement("div", { className: "grid lg:grid-cols-[1.5fr_1fr]" }, /* @__PURE__ */ React.createElement("div", { className: "relative aspect-video w-full bg-black lg:aspect-auto lg:min-h-[460px]" }, /* @__PURE__ */ React.createElement(AnimatePresence, { mode: "wait" }, /* @__PURE__ */ React.createElement(motion.div, { key: current.id, className: "absolute inset-0", initial: { opacity: 0, scale: 1.03 }, animate: { opacity: 1, scale: 1 }, exit: { opacity: 0 }, transition: { duration: 0.35 } }, currentVideo ? /* @__PURE__ */ React.createElement("video", { src: blobUrl(currentVideo.id), controls: true, playsInline: true, className: "h-full w-full object-contain" }) : /* @__PURE__ */ React.createElement(AssetArt, { task: current, large: true }))), visible.length > 1 && /* @__PURE__ */ React.createElement("div", { className: "pointer-events-none absolute inset-x-3 top-1/2 flex -translate-y-1/2 justify-between" }, /* @__PURE__ */ React.createElement("button", { type: "button", onClick: () => step(-1), "aria-label": "Previous asset", className: "pointer-events-auto grid h-9 w-9 place-items-center rounded-full bg-black/50 text-white backdrop-blur hover:bg-black/70" }, /* @__PURE__ */ React.createElement(ChevronLeft, { className: "h-5 w-5" })), /* @__PURE__ */ React.createElement("button", { type: "button", onClick: () => step(1), "aria-label": "Next asset", className: "pointer-events-auto grid h-9 w-9 place-items-center rounded-full bg-black/50 text-white backdrop-blur hover:bg-black/70" }, /* @__PURE__ */ React.createElement(ChevronRight, { className: "h-5 w-5" })))), /* @__PURE__ */ React.createElement("div", { className: "flex flex-col gap-5 p-6 sm:p-7" }, /* @__PURE__ */ React.createElement("div", { className: "flex items-start justify-between gap-3" }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(Chip, { tone: ASSET_TONE[assetType(current.category)] }, assetType(current.category)), /* @__PURE__ */ React.createElement("h2", { id: "lightbox-title", className: "mt-3 font-display text-xl font-semibold leading-snug text-white" }, current.title)), /* @__PURE__ */ React.createElement("button", { type: "button", onClick: close, "aria-label": "Close preview", className: "rounded-lg p-2 text-slate-400 hover:bg-white/5 hover:text-white" }, /* @__PURE__ */ React.createElement(X, { className: "h-5 w-5" }))), /* @__PURE__ */ React.createElement("dl", { className: "grid grid-cols-2 gap-x-4 gap-y-4 text-sm" }, [
+    ["Campaign", current.campaign || "Not set"],
+    ["Format", current.format || "Not set"],
+    ["Platform", current.platform || "Not set"],
+    ["Delivered", fmtWhen(current.at)]
+  ].map(([k, v]) => /* @__PURE__ */ React.createElement("div", { key: k, className: "min-w-0" }, /* @__PURE__ */ React.createElement("dt", { className: "font-mono text-[10px] uppercase tracking-[0.16em] text-slate-500" }, k), /* @__PURE__ */ React.createElement("dd", { className: "mt-1 text-slate-200" }, v)))), /* @__PURE__ */ React.createElement("div", { className: "rounded-xl border border-dashed border-white/15 p-4" }, /* @__PURE__ */ React.createElement("p", { className: "inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-slate-500" }, /* @__PURE__ */ React.createElement(TrendingUp, { className: "h-3.5 w-3.5", "aria-hidden": "true" }), "Performance notes"), /* @__PURE__ */ React.createElement("p", { className: "mt-1.5 text-sm text-slate-300" }, current.notes || "No notes yet.")), /* @__PURE__ */ React.createElement(FileLinks, { files: filesOf(current) }), safeHref(current.url) && /* @__PURE__ */ React.createElement("a", { href: safeHref(current.url), target: "_blank", rel: "noopener noreferrer", className: "mt-auto inline-flex w-fit items-center gap-2 rounded-xl bg-emerald-400 px-4 py-2.5 text-sm font-semibold text-slate-950 shadow-[0_0_30px_-6px_rgba(52,211,153,0.75)] hover:bg-emerald-300" }, "Open source file ", /* @__PURE__ */ React.createElement(ArrowUpRight, { className: "h-4 w-4", "aria-hidden": "true" }))))));
+}
+function MeetingItem({ meeting, open, canManage, onToggle, onToggleDirective, onDelete }) {
+  const [armed, setArmed] = useState(false);
+  const toneName = MEETING_TONES[meeting.type] || "slate";
+  const tone = TONES[toneName];
+  const directives = Array.isArray(meeting.directives) ? meeting.directives : [];
+  const decisions = Array.isArray(meeting.decisions) ? meeting.decisions : [];
+  const done = directives.filter((d) => d.done).length;
+  return /* @__PURE__ */ React.createElement(motion.li, { layout: true, className: `overflow-hidden rounded-2xl border bg-white/[0.035] backdrop-blur-md transition-colors ${open ? tone.border : "border-white/10"}` }, /* @__PURE__ */ React.createElement(
+    "button",
+    {
+      type: "button",
+      onClick: onToggle,
+      "aria-expanded": open,
+      "aria-controls": `meeting-${meeting.id}`,
+      className: "flex w-full items-center gap-4 p-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-cyan-300/60 sm:p-5"
+    },
+    /* @__PURE__ */ React.createElement("span", { className: `hidden h-11 w-11 shrink-0 flex-col items-center justify-center rounded-xl border sm:flex ${tone.border} ${tone.bg}` }, /* @__PURE__ */ React.createElement("span", { className: `font-mono text-[9px] uppercase ${tone.text}` }, new Date(meeting.at).toLocaleDateString("en-US", { month: "short" })), /* @__PURE__ */ React.createElement("span", { className: "font-display text-base font-semibold leading-none text-white" }, new Date(meeting.at).getDate())),
+    /* @__PURE__ */ React.createElement("span", { className: "min-w-0 flex-1" }, /* @__PURE__ */ React.createElement("span", { className: "flex flex-wrap items-center gap-2" }, /* @__PURE__ */ React.createElement(Chip, { tone: toneName }, meeting.type), /* @__PURE__ */ React.createElement("span", { className: "font-mono text-[11px] text-slate-500" }, fmtWhen(meeting.at))), /* @__PURE__ */ React.createElement("span", { className: "mt-1.5 block font-medium text-slate-100" }, meeting.title)),
+    directives.length > 0 && /* @__PURE__ */ React.createElement("span", { className: "hidden shrink-0 font-mono text-xs text-slate-400 sm:block" }, done, "/", directives.length, " done"),
+    /* @__PURE__ */ React.createElement(motion.span, { animate: { rotate: open ? 180 : 0 }, transition: { duration: 0.3 }, className: "shrink-0 text-slate-400" }, /* @__PURE__ */ React.createElement(ChevronDown, { className: "h-5 w-5", "aria-hidden": "true" }))
+  ), /* @__PURE__ */ React.createElement(AnimatePresence, { initial: false }, open && /* @__PURE__ */ React.createElement(
+    motion.div,
+    {
+      id: `meeting-${meeting.id}`,
+      key: "body",
+      initial: { height: 0, opacity: 0 },
+      animate: { height: "auto", opacity: 1 },
+      exit: { height: 0, opacity: 0 },
+      transition: { duration: 0.4, ease }
+    },
+    /* @__PURE__ */ React.createElement("div", { className: "grid gap-6 border-t border-white/10 p-5 md:grid-cols-3" }, /* @__PURE__ */ React.createElement("div", { className: "min-w-0" }, /* @__PURE__ */ React.createElement("h4", { className: "font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500" }, "Summary"), /* @__PURE__ */ React.createElement("p", { className: "mt-2 whitespace-pre-wrap text-sm leading-relaxed text-slate-300" }, meeting.summary || "No summary."), meeting.attendees && /* @__PURE__ */ React.createElement("p", { className: "mt-3 text-xs text-slate-500" }, "Attendees: ", meeting.attendees)), /* @__PURE__ */ React.createElement("div", { className: "min-w-0" }, /* @__PURE__ */ React.createElement("h4", { className: "font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500" }, "Key decisions"), decisions.length ? /* @__PURE__ */ React.createElement("ul", { className: "mt-2 flex flex-col gap-2" }, decisions.map((d, i) => /* @__PURE__ */ React.createElement("li", { key: `${i}-${d}`, className: "flex gap-2 text-sm text-slate-300" }, /* @__PURE__ */ React.createElement(ListChecks, { className: "mt-0.5 h-4 w-4 shrink-0 text-indigo-300", "aria-hidden": "true" }), d))) : /* @__PURE__ */ React.createElement("p", { className: "mt-2 text-sm text-slate-500" }, "None recorded.")), /* @__PURE__ */ React.createElement("div", { className: "min-w-0" }, /* @__PURE__ */ React.createElement("h4", { className: "font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500" }, "Leadership directives"), directives.length ? /* @__PURE__ */ React.createElement("ul", { className: "mt-2 flex flex-col gap-2" }, directives.map((d) => /* @__PURE__ */ React.createElement("li", { key: d.id }, /* @__PURE__ */ React.createElement("label", { htmlFor: `dir-${meeting.id}-${d.id}`, className: `flex gap-2.5 text-sm ${canManage ? "cursor-pointer" : ""}` }, /* @__PURE__ */ React.createElement(
+      "input",
+      {
+        id: `dir-${meeting.id}-${d.id}`,
+        type: "checkbox",
+        checked: !!d.done,
+        disabled: !canManage,
+        onChange: () => onToggleDirective(meeting, d.id),
+        className: "mt-0.5 h-4 w-4 shrink-0 accent-emerald-400"
+      }
+    ), /* @__PURE__ */ React.createElement("span", { className: d.done ? "text-slate-500 line-through" : "text-slate-200" }, d.text))))) : /* @__PURE__ */ React.createElement("p", { className: "mt-2 text-sm text-slate-500" }, "None recorded."))),
+    canManage && /* @__PURE__ */ React.createElement("div", { className: "flex justify-end border-t border-white/5 px-5 py-3 text-xs" }, armed ? /* @__PURE__ */ React.createElement("span", { className: "flex items-center gap-2 text-slate-400" }, "Delete this meeting for everyone?", /* @__PURE__ */ React.createElement("button", { type: "button", onClick: () => onDelete(meeting), className: "rounded-lg bg-rose-500/20 px-2.5 py-1 font-semibold text-rose-200 hover:bg-rose-500/30" }, "Delete"), /* @__PURE__ */ React.createElement("button", { type: "button", onClick: () => setArmed(false), className: "rounded-lg px-2.5 py-1 hover:bg-white/5" }, "Keep")) : /* @__PURE__ */ React.createElement("button", { type: "button", onClick: () => setArmed(true), className: "inline-flex items-center gap-1.5 text-slate-500 hover:text-rose-300" }, /* @__PURE__ */ React.createElement(Trash2, { className: "h-3.5 w-3.5", "aria-hidden": "true" }), "Delete meeting"))
+  )));
+}
+function MeetingComposer({ open, onClose, onSubmit }) {
+  const [form, setForm] = useState(null);
+  const [error, setError] = useState("");
+  const [saving, setSaving] = useState(false);
+  useEffect(() => {
+    if (open) {
+      setForm({ title: "", type: MEETING_TYPES[0], date: isoDay(/* @__PURE__ */ new Date()), attendees: "", summary: "", decisions: "", directives: "" });
+      setError("");
+      setSaving(false);
+    }
+  }, [open]);
+  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e && e.target ? e.target.value : e }));
+  const submit = async (e) => {
+    e.preventDefault();
+    if (!form.title.trim()) {
+      setError("Give the meeting a title.");
+      return;
+    }
+    const at = /* @__PURE__ */ new Date(`${form.date || isoDay(/* @__PURE__ */ new Date())}T${pad((/* @__PURE__ */ new Date()).getHours())}:${pad((/* @__PURE__ */ new Date()).getMinutes())}:00`);
+    setSaving(true);
+    const ok = await onSubmit({
+      title: form.title.trim(),
+      type: form.type,
+      at: (Number.isNaN(at.getTime()) ? /* @__PURE__ */ new Date() : at).toISOString(),
+      attendees: form.attendees.trim(),
+      summary: form.summary.trim(),
+      decisions: lines(form.decisions),
+      directives: lines(form.directives).map((text, i) => ({ id: `d${Date.now().toString(36)}${i}`, text, done: false }))
+    });
+    if (!ok) setSaving(false);
+  };
+  return /* @__PURE__ */ React.createElement(Modal, { open: open && !!form, onClose, labelledBy: "meeting-title" }, form && /* @__PURE__ */ React.createElement("form", { onSubmit: submit, className: "flex flex-col gap-5 p-6 sm:p-7" }, /* @__PURE__ */ React.createElement("div", { className: "flex items-start justify-between gap-4" }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("span", { className: "font-mono text-[11px] uppercase tracking-[0.2em] text-indigo-300" }, "Meeting log"), /* @__PURE__ */ React.createElement("h2", { id: "meeting-title", className: "mt-1 font-display text-2xl font-semibold text-white" }, "Log a meeting")), /* @__PURE__ */ React.createElement("button", { type: "button", onClick: onClose, "aria-label": "Close", className: "rounded-lg p-2 text-slate-400 hover:bg-white/5 hover:text-white" }, /* @__PURE__ */ React.createElement(X, { className: "h-5 w-5" }))), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { htmlFor: "meeting-name" }, "Title"), /* @__PURE__ */ React.createElement("input", { id: "meeting-name", autoFocus: true, value: form.title, onChange: set("title"), placeholder: "Weekly align-up \xB7 LegistAI content calendar", className: inputCls }), error && /* @__PURE__ */ React.createElement("p", { className: "mt-1.5 text-xs text-rose-300" }, error)), /* @__PURE__ */ React.createElement("div", { className: "grid gap-4 sm:grid-cols-2" }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { htmlFor: "meeting-type" }, "Type"), /* @__PURE__ */ React.createElement("select", { id: "meeting-type", value: form.type, onChange: set("type"), className: `${inputCls} bg-[#0a0f1c]` }, MEETING_TYPES.map((t) => /* @__PURE__ */ React.createElement("option", { key: t }, t)))), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { htmlFor: "meeting-date" }, "Date"), /* @__PURE__ */ React.createElement("input", { id: "meeting-date", type: "date", value: form.date, onChange: set("date"), className: inputCls }))), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { htmlFor: "meeting-attendees" }, "Attendees"), /* @__PURE__ */ React.createElement("input", { id: "meeting-attendees", value: form.attendees, onChange: set("attendees"), placeholder: "Leadership, creative team", className: inputCls })), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { htmlFor: "meeting-summary" }, "Summary"), /* @__PURE__ */ React.createElement("textarea", { id: "meeting-summary", rows: 3, value: form.summary, onChange: set("summary"), placeholder: "Purpose, what was discussed, outcome", className: `${inputCls} resize-y` })), /* @__PURE__ */ React.createElement("div", { className: "grid gap-4 sm:grid-cols-2" }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { htmlFor: "meeting-decisions" }, "Key decisions, one per line"), /* @__PURE__ */ React.createElement("textarea", { id: "meeting-decisions", rows: 4, value: form.decisions, onChange: set("decisions"), className: `${inputCls} resize-y` })), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(FieldLabel, { htmlFor: "meeting-directives" }, "Leadership directives, one per line"), /* @__PURE__ */ React.createElement("textarea", { id: "meeting-directives", rows: 4, value: form.directives, onChange: set("directives"), placeholder: "Send vendor comparison by Wed", className: `${inputCls} resize-y` }))), /* @__PURE__ */ React.createElement("div", { className: "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end" }, /* @__PURE__ */ React.createElement(GlowButton, { tone: "ghost", onClick: onClose }, "Cancel"), /* @__PURE__ */ React.createElement(GlowButton, { type: "submit", disabled: saving }, /* @__PURE__ */ React.createElement(Check, { className: "h-4 w-4", "aria-hidden": "true" }), saving ? "Saving\u2026" : "Save meeting"))));
+}
+function Meetings({ meetings, hub, onCompose, onToggleDirective, onDelete }) {
+  const [openId, setOpenId] = useState(null);
+  const firstId = meetings[0] ? meetings[0].id : null;
+  const activeId = openId === null ? firstId : openId;
+  const loading = hub.status === "connecting" || hub.status === "live" && !hub.ready.meetings;
+  return /* @__PURE__ */ React.createElement("section", { "aria-labelledby": "meetings", className: "flex scroll-mt-24 flex-col gap-6" }, /* @__PURE__ */ React.createElement(
+    SectionHeader,
+    {
+      id: "meetings",
+      eyebrow: "Meeting notes",
+      title: "Align-ups, decisions and directives",
+      description: "Notes from internal Dimenfy and LegistAI meetings, the decisions made, and every directive requested by leadership with its status.",
+      action: hub.isOwner ? /* @__PURE__ */ React.createElement(GlowButton, { tone: "ghost", onClick: onCompose }, /* @__PURE__ */ React.createElement(Plus, { className: "h-4 w-4 text-indigo-300", "aria-hidden": "true" }), "Log meeting") : null
+    }
+  ), meetings.length ? /* @__PURE__ */ React.createElement("ul", { className: "flex flex-col gap-3" }, meetings.map((m) => /* @__PURE__ */ React.createElement(
+    MeetingItem,
+    {
+      key: m.id,
+      meeting: m,
+      open: activeId === m.id,
+      canManage: hub.isOwner,
+      onToggle: () => setOpenId(activeId === m.id ? "" : m.id),
+      onToggleDirective,
+      onDelete
+    }
+  ))) : /* @__PURE__ */ React.createElement(Glass, { className: "px-6 py-12 text-center text-sm text-slate-400" }, loading ? "Loading meeting notes\u2026" : hub.isOwner ? "No meetings logged yet. Use \u201CLog meeting\u201D to add the first one with its decisions and directives." : "Meeting summaries and leadership directives appear here as Steph logs them."));
+}
+function Toasts({ items }) {
+  return /* @__PURE__ */ React.createElement(
+    "div",
+    {
+      "aria-live": "polite",
+      className: "pointer-events-none fixed inset-x-0 bottom-0 z-[60] flex flex-col items-center gap-2",
+      style: { paddingBottom: "max(20px, env(safe-area-inset-bottom, 0px))", ...GUTTER }
+    },
+    /* @__PURE__ */ React.createElement(AnimatePresence, null, items.map((t) => /* @__PURE__ */ React.createElement(
+      motion.div,
+      {
+        key: t.id,
+        initial: { opacity: 0, y: 20, scale: 0.95 },
+        animate: { opacity: 1, y: 0, scale: 1 },
+        exit: { opacity: 0, y: 10, scale: 0.95 },
+        className: `flex items-center gap-2 rounded-full border bg-[#0a0f1c]/95 px-4 py-2.5 text-sm text-slate-100 shadow-2xl backdrop-blur-xl ${TONES[t.tone].border}`
+      },
+      /* @__PURE__ */ React.createElement("span", { className: `h-2 w-2 shrink-0 rounded-full ${TONES[t.tone].dot}` }),
+      t.msg
+    )))
+  );
+}
+function StephanieWorkHub() {
+  const [hub, setHub, caps] = useHub();
+  const [composer, setComposer] = useState(null);
+  const [meetingComposer, setMeetingComposer] = useState(false);
+  const [threadId, setThreadId] = useState(null);
+  const [photoIndex, setPhotoIndex] = useState(null);
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const [editingProfile, setEditingProfile] = useState(false);
+  const [viewingProfileId, setViewingProfileId] = useState(null);
+  const [toasts, setToasts] = useState([]);
+  const toast = useCallback((msg, tone = "emerald") => {
+    const id = `${Date.now()}-${Math.random()}`;
+    setToasts((t) => [...t, { id, msg, tone }]);
+    setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), 3200);
+  }, []);
+  const write = useCallback(async (fn) => {
+    const db = caps.current.db;
+    const attempt = async (retry) => {
+      try {
+        await fn(db);
+        return true;
+      } catch (e) {
+        const code = e && e.code;
+        if (code === "unavailable" && retry) {
+          await new Promise((r) => setTimeout(r, 400 + Math.random() * 600));
+          return attempt(false);
+        }
+        if (code === "invalid_argument") {
+          setHub((h) => ({ ...h, canWrite: false }));
+          toast("You have view-only access, so this wasn't saved.", "rose");
+        } else if (code === "quota_exceeded") {
+          toast("The hub's storage is full. Delete old entries to add new ones.", "rose");
+        } else {
+          toast("Couldn't save that change. Try again in a moment.", "rose");
+        }
+        return false;
+      }
+    };
+    if (!db) {
+      toast("The live log isn't available in this view.", "rose");
+      return false;
+    }
+    return attempt(true);
+  }, [caps, setHub, toast]);
+  const upload = useCallback(async (file) => {
+    const assets = caps.current.assets;
+    if (!assets) {
+      toast("File uploads aren't available in this view.", "rose");
+      return null;
+    }
+    try {
+      const res = await assets.upload(file);
+      return { id: res.id, name: file.name, contentType: res.contentType || file.type || "" };
+    } catch (e) {
+      toast(`Couldn't upload ${file.name}. Files must be images, video or PDFs under 20 MB.`, "rose");
+      return null;
+    }
+  }, [caps, toast]);
+  const tasks = useMemo(() => {
+    const byTask = {};
+    hub.feedback.forEach((f) => {
+      (byTask[f.taskId] = byTask[f.taskId] || []).push(f);
+    });
+    return hub.tasks.map((t) => {
+      const comments = byTask[t.id] || [];
+      const decisions = comments.filter((c) => c.kind === "decision");
+      const last = decisions[decisions.length - 1];
+      return { ...t, comments, approval: last ? last.decision : null };
+    });
+  }, [hub.tasks, hub.feedback]);
+  const profiles = useProfiles(caps.current.user, [...hub.feedback.map((f) => f.authorId), ...hub.profiles.map((p) => p.id)]);
+  const myId = hub.me && hub.me.id;
+  const myProfile = hub.profiles.find((p) => p.id === myId) || null;
+  const canJoinTeam = hub.status === "live" && !!myId && hub.canWrite !== false;
+  const metrics = useMemo(() => {
+    const todayKey = isoDay(/* @__PURE__ */ new Date());
+    const today = tasks.filter((t) => isoDay(new Date(t.at)) === todayKey);
+    const weekAgo = Date.now() - 7 * 864e5;
+    return {
+      loggedToday: today.length,
+      deliverablesToday: today.filter((t) => t.status === "Completed").length,
+      awaiting: tasks.filter((t) => t.needsApproval && t.approval !== "approved").length,
+      hoursSaved: tasks.filter((t) => new Date(t.at).getTime() >= weekAgo).reduce((s, t) => s + num(t.hoursSaved), 0),
+      active: tasks.filter((t) => t.status === "In Progress").length,
+      blocked: tasks.filter((t) => t.status === "Blocked").length
+    };
+  }, [tasks]);
+  const waiting = tasks.filter((t) => t.needsApproval && t.approval !== "approved" || t.status === "Blocked").length;
+  const canDecide = hub.status === "live" && hub.canWrite !== false;
+  const photos = Array.isArray(hub.settings.photos) ? hub.settings.photos : [];
+  const nextCode = () => {
+    const max = hub.tasks.reduce((m, t) => {
+      const n = parseInt(String(t.id).replace(/^SF-/, ""), 10);
+      return Number.isFinite(n) && n > m ? n : m;
+    }, 1e3);
+    return `SF-${max + 1}`;
+  };
+  const addTask = async (data) => {
+    const code = nextCode();
+    const now = (/* @__PURE__ */ new Date()).toISOString();
+    const ok = await write((db) => db.doc(`tasks/${code}`).set({ ...data, at: now, updatedAt: now }));
+    if (ok) toast(`Logged ${code}: ${data.title.length > 40 ? `${data.title.slice(0, 40)}\u2026` : data.title}`);
+    return ok;
+  };
+  const quickAdd = (title, category) => addTask({ title, category, priority: "Medium", status: "Completed", url: "", notes: "", hoursSaved: 0, needsApproval: false, showcase: false, campaign: "", format: "", platform: "", files: [] });
+  const cycleStatus = (task) => {
+    const status = STATUS_ORDER[(STATUS_ORDER.indexOf(task.status) + 1) % STATUS_ORDER.length];
+    return write((db) => db.doc(`tasks/${task.id}`).update({ status, updatedAt: (/* @__PURE__ */ new Date()).toISOString() }));
+  };
+  const addFeedback = (body) => write((db) => db.collection("feedback").add({ ...body, authorId: hub.me && hub.me.id || null, byOwner: hub.isOwner, at: (/* @__PURE__ */ new Date()).toISOString() }));
+  const addComment = async (taskId, text) => {
+    const ok = await addFeedback({ taskId, kind: "note", text });
+    if (ok) toast("Note posted", "fuchsia");
+    return ok;
+  };
+  const decide = async (taskId, decision) => {
+    const ok = await addFeedback({ taskId, kind: "decision", decision });
+    if (ok) toast(decision === "approved" ? "Approved" : "Changes requested", decision === "approved" ? "emerald" : "rose");
+    return ok;
+  };
+  const deleteTask = async (task) => {
+    const ok = await write((db) => db.doc(`tasks/${task.id}`).delete());
+    if (!ok) return;
+    setThreadId(null);
+    for (const c of task.comments) {
+      await write((db) => db.doc(`feedback/${c.id}`).delete());
+    }
+    toast("Entry deleted", "rose");
+  };
+  const addMeeting = async (data) => {
+    const ok = await write((db) => db.collection("meetings").add(data));
+    if (ok) {
+      toast("Meeting logged", "indigo");
+      setMeetingComposer(false);
+    }
+    return ok;
+  };
+  const toggleDirective = (meeting, dirId) => write((db) => db.doc(`meetings/${meeting.id}`).update({
+    directives: meeting.directives.map((d) => d.id === dirId ? { ...d, done: !d.done } : d)
+  }));
+  const deleteMeeting = async (meeting) => {
+    const ok = await write((db) => db.doc(`meetings/${meeting.id}`).delete());
+    if (ok) toast("Meeting deleted", "rose");
+  };
+  const saveSettings = (patch) => write((db) => db.doc("settings/hub").set({ ...hub.settings, ...patch }));
+  const uploadPhoto = async (file) => {
+    setUploadingPhoto(true);
+    const res = await upload(file);
+    setUploadingPhoto(false);
+    if (!res) return;
+    const next = [...photos, { id: res.id, caption: "" }].slice(-MAX_PHOTOS);
+    const ok = await saveSettings({ photos: next, portraitAssetId: hub.settings.portraitAssetId || res.id });
+    if (ok) toast("Photo added for everyone to see", "rose");
+  };
+  const captionPhoto = (id, caption) => saveSettings({ photos: photos.map((p) => p.id === id ? { ...p, caption } : p) });
+  const setPortrait = async (id) => {
+    if (await saveSettings({ portraitAssetId: id })) toast("Main portrait updated", "rose");
+  };
+  const removePhoto = async (id) => {
+    const rest = photos.filter((p) => p.id !== id);
+    const portrait = hub.settings.portraitAssetId === id ? rest[0] ? rest[0].id : "" : hub.settings.portraitAssetId || "";
+    const ok = await saveSettings({ photos: rest, portraitAssetId: portrait });
+    if (!ok) return;
+    setPhotoIndex(null);
+    try {
+      if (caps.current.assets) await caps.current.assets.delete(id);
+    } catch (e) {
+    }
+    toast("Photo removed", "rose");
+  };
+  const saveProfile = async (form) => {
+    const now = (/* @__PURE__ */ new Date()).toISOString();
+    const workingOn = form.workingOn.trim();
+    const changedWork = !myProfile || (myProfile.workingOn || "") !== workingOn;
+    const ok = await write((db) => db.doc(`profiles/${myId}`).set({
+      preferredName: form.preferredName.trim(),
+      role: form.role.trim(),
+      workingOn,
+      about: form.about.trim(),
+      photos: form.photos,
+      workingOnAt: changedWork ? now : myProfile.workingOnAt || now,
+      updatedAt: now
+    }));
+    if (ok) {
+      toast("Profile saved", "fuchsia");
+      setEditingProfile(false);
+    }
+    return ok;
+  };
+  const removeProfilePhoto = async (id) => {
+    try {
+      if (caps.current.assets) await caps.current.assets.delete(id);
+    } catch (e) {
+    }
+  };
+  const threadTask = tasks.find((t) => t.id === threadId) || null;
+  const viewingProfile = hub.profiles.find((p) => p.id === viewingProfileId) || null;
+  const closeThread = useCallback(() => setThreadId(null), []);
+  const closeComposer = useCallback(() => setComposer(null), []);
+  const closeMeetingComposer = useCallback(() => setMeetingComposer(false), []);
+  const closePhoto = useCallback(() => setPhotoIndex(null), []);
+  const closeProfileEditor = useCallback(() => setEditingProfile(false), []);
+  const closeProfileViewer = useCallback(() => setViewingProfileId(null), []);
+  return /* @__PURE__ */ React.createElement(MotionConfig, { reducedMotion: "user" }, /* @__PURE__ */ React.createElement("div", { className: "relative min-h-full font-sans text-slate-300 antialiased selection:bg-rose-400/30" }, /* @__PURE__ */ React.createElement(Backdrop, null), /* @__PURE__ */ React.createElement(TopBar, { hub, onDump: () => setComposer({}), waiting }), /* @__PURE__ */ React.createElement("main", { className: "mx-auto flex max-w-7xl flex-col gap-16 pb-28 pt-8 sm:gap-20 sm:pt-10", style: GUTTER }, /* @__PURE__ */ React.createElement("div", { className: "flex flex-col gap-5" }, /* @__PURE__ */ React.createElement(ConnectionNotice, { status: hub.status }), /* @__PURE__ */ React.createElement(
+    Hero,
+    {
+      hub,
+      metrics,
+      live: hub.status === "live",
+      uploading: uploadingPhoto,
+      onUploadPhoto: uploadPhoto,
+      onOpenPhoto: setPhotoIndex,
+      onSaveSettings: saveSettings
+    }
+  ), hub.isOwner && /* @__PURE__ */ React.createElement(PayrollLinkCard, { url: hub.privateLinks.payrollSheetUrl, calculatorUrl: hub.privateLinks.payrollCalculatorUrl }), /* @__PURE__ */ React.createElement(Insights, { tasks })), /* @__PURE__ */ React.createElement(WorkLog, { tasks, hub, onQuickAdd: quickAdd, onCompose: setComposer, onCycleStatus: cycleStatus, onOpenThread: setThreadId }), /* @__PURE__ */ React.createElement(Approvals, { tasks, canDecide, onOpenThread: setThreadId, onDecision: decide }), /* @__PURE__ */ React.createElement(Team, { hub, people: profiles, canJoin: canJoinTeam, onEdit: () => setEditingProfile(true), onOpen: setViewingProfileId }), /* @__PURE__ */ React.createElement(Gallery, { tasks, hub }), /* @__PURE__ */ React.createElement(Meetings, { meetings: hub.meetings, hub, onCompose: () => setMeetingComposer(true), onToggleDirective: toggleDirective, onDelete: deleteMeeting })), /* @__PURE__ */ React.createElement("footer", { className: "border-t border-white/10" }, /* @__PURE__ */ React.createElement("div", { className: "mx-auto flex max-w-7xl flex-col gap-2 py-8 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between", style: GUTTER }, /* @__PURE__ */ React.createElement("span", null, "Steph Fuentes \xB7 Executive Operations & Creative Director \xB7 Dimenfy & LegistAI"), /* @__PURE__ */ React.createElement("span", null, "Entries, notes and decisions sync live for everyone with access."))), /* @__PURE__ */ React.createElement(
+    TaskComposer,
+    {
+      open: !!composer,
+      initial: composer,
+      canUpload: hub.isOwner && hub.status === "live",
+      onUpload: upload,
+      onClose: closeComposer,
+      onSubmit: async (data) => {
+        const ok = await addTask(data);
+        if (ok) setComposer(null);
+        return ok;
+      }
+    }
+  ), /* @__PURE__ */ React.createElement(MeetingComposer, { open: meetingComposer, onClose: closeMeetingComposer, onSubmit: addMeeting }), /* @__PURE__ */ React.createElement(ThreadDrawer, { task: threadTask, hub, profiles, onClose: closeThread, onComment: addComment, onDecision: decide, onDelete: deleteTask }), /* @__PURE__ */ React.createElement(
+    PhotoViewer,
+    {
+      photos,
+      index: photoIndex,
+      isOwner: hub.isOwner,
+      portraitId: hub.settings.portraitAssetId || photos[0] && photos[0].id,
+      onClose: closePhoto,
+      onStep: (d) => setPhotoIndex((i) => i === null ? i : (i + d + photos.length) % photos.length),
+      onCaption: captionPhoto,
+      onSetPortrait: setPortrait,
+      onRemove: removePhoto
+    }
+  ), /* @__PURE__ */ React.createElement(
+    ProfileEditor,
+    {
+      open: editingProfile,
+      profile: myProfile,
+      fallbackName: hub.me && hub.me.name || "",
+      canUpload: !!caps.current.assets,
+      onUpload: upload,
+      onRemovePhoto: removeProfilePhoto,
+      onClose: closeProfileEditor,
+      onSave: saveProfile
+    }
+  ), /* @__PURE__ */ React.createElement(ProfileViewer, { profile: viewingProfile, people: profiles, onClose: closeProfileViewer }), /* @__PURE__ */ React.createElement(Toasts, { items: toasts })));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(StephanieWorkHub));
+
+})();
+</script>
+
+</body></html>
